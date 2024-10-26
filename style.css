@@ -16,6 +16,7 @@
 }
 div{
     height: 100%;
+    /*color: red;*/
 }
 .day{
     border: 2px solid;
@@ -48,4 +49,18 @@ div{
 .eventListed{
     border: 0 solid;
     height: 100%;
+}
+.dot{
+    height: 1rem;
+    width: 1rem;
+    background-color: cornflowerblue;
+    border-radius: 50%;
+    display: inline-block;
+}
+.divWithDot{
+    height: 100%;
+    width: 100%;
+    justify-items: center;
+    align-items: start;
+    margin-left: 2.3rem;
 }

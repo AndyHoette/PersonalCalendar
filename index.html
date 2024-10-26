@@ -3,32 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
-    <title>Title</title>
+    <title>WashU Calendar</title>
 </head>
 <body>
     <div class="calendar">
         <div class="arrow"><button id = 'prevMonthButton' type="button" class="arrowButton"><-</button></div>
         <div class="month" id="monthLabel">October 2024</div>
         <div class="arrow"><button id = 'nextMonthButton' type="button" class="arrowButton">-></button></div>
-        <div class="day">1</div>
-        <div class="day">2</div>
-        <div class="day">3</div>
-        <div class="day">4</div>
-        <div class="day">5</div>
-        <div class="day">6</div>
-        <div class="day">7</div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
         <div class="vertical">
             <form name="LogIn" autocomplete="off" id="LogInForm">
-                <p>
-                    <label for="user">Username:</label>
+                    <label for="user">User ID:</label>
                     <input type="text" name="user" id="user" /> <!--creates a simple form to handle logins-->
                     <label for="password">Password:</label>
                     <input type="password" name="password" id="password" />
-                </p>
-                <p>
                     <input type="submit" value="Log In!" id="logInButton"/>
-                </p>
             </form>
+            <form name="createAccountForm" autocomplete="off" id = 'createAccountForm'>
+                <label for="createPassword">New Account Password:</label>
+                <input type="password" name="createPassword" id="createPassword" />
+                <input type="submit" value="Create Account!" id="createAccountButton"/>
+            </form>
+            <p id="userGreeting">Hello User #3</p>
             <form name="AddEvent" autocomplete="off" id="AddEventForm">
                 <p>
                     <label for="title">Title:</label>
@@ -41,52 +43,52 @@
                 </p>
             </form>
         </div>
-        <div class="day">1</div>
-        <div class="day">2</div>
-        <div class="day">3</div>
-        <div class="day">4</div>
-        <div class="day">5</div>
-        <div class="day">6</div>
-        <div class="day">7</div>
-        <div class="day">1</div>
-        <div class="day">2</div>
-        <div class="day">3</div>
-        <div class="day">4</div>
-        <div class="day">5</div>
-        <div class="day">6</div>
-        <div class="day">7</div>
-        <div class="day">1</div>
-        <div class="day">2</div>
-        <div class="day">3</div>
-        <div class="day">4</div>
-        <div class="day">5</div>
-        <div class="day">6</div>
-        <div class="day">7</div>
-        <div class="day">1</div>
-        <div class="day">2</div>
-        <div class="day">3</div>
-        <div class="day">4</div>
-        <div class="day">5</div>
-        <div class="day">6</div>
-        <div class="day">7</div>
-        <div class="day">1</div>
-        <div class="day">2</div>
-        <div class="day">3</div>
-        <div class="day">4</div>
-        <div class="day">5</div>
-        <div class="day">6</div>
-        <div class="day">7</div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
+        <div class="day"><p></p></div>
     </div>
     <div id="bottomHalf" class="bottomHalf">
         <div id="dayListing" class = "dayListing">
             <h1 id="dayOfEvent">October, 4 2004</h1>
-            <ul>
-                <li><div class = "eventListed">
+            <ul id="listOfEvents">
+                <!--<li><div class = "eventListed">
                     <input type="hidden" value="101">
                     <input type="hidden" value="This is a Title">
                     <input type="hidden" value="This is the datetime">
                     <p>This is an event!</p>
-                </div></li>
+                </div></li> -->
             </ul>
         </div>
         <div id="eventSelected">
@@ -100,10 +102,14 @@
             <label for="NewEventDatetime">Edit Date:</label>
             <input type="datetime-local" name="EventDatetime" id="NewEventDatetime" />
             <br>
+            <label for="userToShare">Share With:</label>
+            <input type="text" name="userToShare" id="userToShare" />
+            <br>
             <button id="eventEditButton">Edit</button>
             <button id="eventShareButton">Share</button>
         </div>
     </div>
+    <div class="divWithDot"><span class="dot"></span></div>
     <script src="cal.js"></script>
 </body>
 </html>
