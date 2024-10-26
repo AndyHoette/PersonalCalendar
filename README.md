@@ -4,3 +4,11 @@
 Andy Hoette - 518194
 
 Josh Lee - 518325
+
+What needs to be done on the front end (as of 26 @ 00:35):
+    Add indicator for dates
+    Add dates events
+    Add edit dates events
+    Make log in actually work
+    Make add event actually work
+    
