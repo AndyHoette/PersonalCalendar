@@ -7,18 +7,25 @@
     grid-template-columns: repeat(8, 1fr);
     align-items: center;
     justify-content:center;
+
+}
+.bottomHalf{
+    display: grid;
+    width: 98%;
+    grid-template-columns: repeat(2, 1fr);
 }
 div{
-    border: 2px solid;
     height: 100%;
 }
 .day{
+    border: 2px solid;
 }
 .month{
     text-align: center;
     font-size: 5em;
     grid-column-start: 2;
     grid-column-end: 8;
+    border: 2px solid;
 }
 .arrow{
     justify-content: center;
@@ -35,6 +42,10 @@ div{
     grid-column: 8;
 }
 .dayListing{
+    border: 0 solid;
+    height: 100%;
+}
+.eventListed{
     border: 0 solid;
     height: 100%;
 }

@@ -11,4 +11,5 @@ What needs to be done on the front end (as of 26 @ 00:35):
     Add edit dates events
     Make log in actually work
     Make add event actually work
+    Need to make share and edits value immediately if blank entry
     

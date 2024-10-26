@@ -77,12 +77,32 @@
         <div class="day">6</div>
         <div class="day">7</div>
     </div>
-    <div id="dayListing" class = "dayListing">
-        <h1>October, 4 2004</h1>
-        <ul>
-            <li>hi</li>
-            <li>hi 2</li>
-        </ul>
+    <div id="bottomHalf" class="bottomHalf">
+        <div id="dayListing" class = "dayListing">
+            <h1 id="dayOfEvent">October, 4 2004</h1>
+            <ul>
+                <li><div class = "eventListed">
+                    <input type="hidden" value="101">
+                    <input type="hidden" value="This is a Title">
+                    <input type="hidden" value="This is the datetime">
+                    <p>This is an event!</p>
+                </div></li>
+            </ul>
+        </div>
+        <div id="eventSelected">
+            <input type="hidden" value ="1">
+            <input type="hidden" value ="">
+            <input type="hidden" value = "">
+            <h2 id="nameOfEvent">This is the title of an event</h2>
+            <label for="NewTitle">Edit Title:</label>
+            <input type="text" name="title" id="NewTitle" /> <!--creates a simple form to handle logins-->
+            <br>
+            <label for="NewEventDatetime">Edit Date:</label>
+            <input type="datetime-local" name="EventDatetime" id="NewEventDatetime" />
+            <br>
+            <button id="eventEditButton">Edit</button>
+            <button id="eventShareButton">Share</button>
+        </div>
     </div>
     <script src="cal.js"></script>
 </body>
