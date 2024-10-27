@@ -6,7 +6,10 @@ const dayOfEventsH1 = document.getElementById("dayOfEvent");
 const eventSelected = document.getElementById("eventSelected");
 const listOfEvents = document.getElementById("listOfEvents");
 const dot = document.getElementsByClassName("divWithDot")[0];
-let eventDivs = [];
+const logOutButton = document.getElementById("logOut");
+const monthColors = ["CadetBlue", "Crimson", "DarkOliveGreen", "DarkTurquoise", "Green", "GoldenRod", "HotPink", "LightSalmon", "OrangeRed", "DimGray", "SaddleBrown", "SeaGreen"];
+let listOfAllDivs = document.getElementsByTagName("div");
+let eventDivs = [""];
 let currDate = new Date();
 
 function daysInMonth(month, year){
@@ -15,6 +18,7 @@ function daysInMonth(month, year){
 }
 
 function setUpCalendar() {
+    changeCalendarColor(currDate.getMonth());
     monthLabel.innerHTML = mString(currDate) + " " + currDate.getFullYear();
     let firstDayOfMonth = new Date(currDate.getFullYear(), currDate.getMonth(), 1).getDay();
     let maxDays = daysInMonth(currDate.getMonth(), currDate.getFullYear());
@@ -31,6 +35,10 @@ function setUpCalendar() {
         }
     }
     //get a list of events for this month (between currDate.getMonth(),1 and currDate.getMonth(),maxDays
+    /*
+    * Needs to get CSRF Token
+    * Needs to call the current php file
+    * */
     listOfEventsThisMonth = [{day:1},{day:5}]
     for(let i = 0; i<listOfEventsThisMonth.length; i++){
         let dayOfEvent = listOfEventsThisMonth[i].day;
@@ -40,6 +48,12 @@ function setUpCalendar() {
     }
 }
 
+function changeCalendarColor(monthIdx){
+    //for all the divs change the color
+    for(let i = 0; i<listOfAllDivs.length; i++){
+        listOfAllDivs[i].style.color = monthColors[monthIdx];
+    }
+}
 
 function mString(dateO){
     return dateO.toLocaleString('default',{month: 'long'});
@@ -47,12 +61,32 @@ function mString(dateO){
 
 function nextMonth(){
     currDate = new Date(currDate.getFullYear(), currDate.getMonth()+1, 1);
+    if(currDate.month===0){
+        checkNewYear();
+    }
     setUpCalendar();
 }
 
 function prevMonth() {
     currDate = new Date(currDate.getFullYear(), currDate.getMonth()-1, 1);
+    if(currDate.month===11){
+        checkNewYear(currDate.getFullYear());
+    }
     setUpCalendar();
+}
+
+function checkNewYear(year){
+    /*
+    * Needs to get CSRF Token
+    * Needs to call the current php file
+    * */
+    const data = {"newYear":year, "csrfToken":1};
+    fetch("login_ajax.php", {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' }
+    }).catch(err => console.log(err))
+    //just needs to call a php script and send it the new year
 }
 
 function displayDate(dateDivInst){
@@ -63,6 +97,10 @@ function displayDate(dateDivInst){
     document.getElementById("dayListing").style.display = "block";
     dayOfEventsH1.innerHTML = mString(currDate) + ", " + day.day + " " + day.year;
     //get all the events and add a <li> and a <div> and <input> and <p>
+    /*
+    * Needs to get CSRF Token
+    * Needs to call the current php file
+    * */
     let events = [{id: 330, title:"This is obj title", when:new Date()}]
     listOfEvents.innerHTML = "";
     for(let i = 0; i<events.length; i++){
@@ -96,12 +134,48 @@ function displayDate(dateDivInst){
 
 function logIn(){
     //checks for valid login
-    console.log(this.parentElement);
-    //console.log("LogIn Clicked");
+    //console.log(this.parentElement);
+    const password = document.getElementById("password").value;
+    const userIdLogIn = document.getElementById("password").value;
+    const data = {"userID": userIdLogIn, "password":password};
+    console.log(data);
+    /*
+    * Needs to get CSRF Token
+    * Needs to call the current php file
+    * */
+    fetch("login_ajax.php", {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById("LogInForm").style.display = "none";
+                document.getElementById("createAccountForm").style.display = "none";
+                document.getElementById("userGreeting").style.display = "block";
+                document.getElementById("AddEventForm").style.display = "block";
+            } else {
+                console.log(`You were not logged in: ${data.message}`);
+            }
+        })
+        .catch(err => console.error(err));
     document.getElementById("LogInForm").style.display = "none";
     document.getElementById("createAccountForm").style.display = "none";
     document.getElementById("userGreeting").style.display = "block";
     document.getElementById("AddEventForm").style.display = "block";
+}
+
+function logOut(){
+    /*
+    * Needs to get CSRF Token
+    * Needs to call the current php file
+    * */
+    fetch("login_ajax.php", {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+    }).then(response => setUpCalendar())
+        .catch(err => console.log(err))
 }
 
 function createAccount(b){
@@ -110,8 +184,26 @@ function createAccount(b){
 }
 
 function addEvent(){
+    let newTitle = document.getElementById("title").value;
     let dateToAdd = new Date(document.getElementById('EventDatetime').value);
+    if(document.getElementById("recurringCheckBox").checked){
+        addEventRecurring(newTitle, dateToAdd);
+    }
     console.log(dateToAdd);
+
+}
+
+function addEventRecurring(title, dateToAdd){
+    //get list of years
+    let years = [2024, 2025, 2023];
+    for(let i = 0; i<years.length; i++){
+        let newDateToAdd = new Date(years[i], dateToAdd.getMonth(), dateToAdd.getDate(), dateToAdd.getHours(), dateToAdd.getMinutes());
+        addEventAJAX(title, newDateToAdd);
+    }
+}
+
+function addEventAJAX(title, dateToAdd){
+    //create the ajax request
 }
 
 function highlightEvent(){
@@ -160,7 +252,7 @@ logInButton.addEventListener("click", (e)=>{e.preventDefault(); logIn();}, false
 document.getElementById('addEventButton').addEventListener("click", (e) =>{e.preventDefault(); addEvent();}, false);
 createAccountButton.addEventListener("click", (e) =>{e.preventDefault(); createAccount(createAccountButton);}, false);
 createAccountButton.addEventListener("click", (e) =>{e.preventDefault(); createAccount(createAccountButton);}, false);
-
+logOutButton.addEventListener("click", logOut, false);
 
 for(let i = 0; i<dayDivs.length; i++){
     dayDivs[i].addEventListener('click', function(){displayDate(this)}, false); //this is a comment

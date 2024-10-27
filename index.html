@@ -20,7 +20,7 @@
         <div class="vertical">
             <form name="LogIn" autocomplete="off" id="LogInForm">
                     <label for="user">User ID:</label>
-                    <input type="text" name="user" id="user" /> <!--creates a simple form to handle logins-->
+                    <input type="number" name="user" id="user" /> <!--creates a simple form to handle logins-->
                     <label for="password">Password:</label>
                     <input type="password" name="password" id="password" />
                     <input type="submit" value="Log In!" id="logInButton"/>
@@ -31,12 +31,15 @@
                 <input type="submit" value="Create Account!" id="createAccountButton"/>
             </form>
             <p id="userGreeting">Hello User #3</p>
+            <button id="logOut">Log Out</button>
             <form name="AddEvent" autocomplete="off" id="AddEventForm">
                 <p>
                     <label for="title">Title:</label>
                     <input type="text" name="title" id="title" /> <!--creates a simple form to handle logins-->
                     <label for="EventDatetime">Date:</label>
                     <input type="datetime-local" name="EventDatetime" id="EventDatetime" />
+                    <label for="recurringCheckBox">Repeat Annually:</label>
+                    <input type="checkbox" name="recurringCheckBox" id="recurringCheckBox" />
                 </p>
                 <p>
                     <input type="submit" value="Add Event" id="addEventButton"/>
