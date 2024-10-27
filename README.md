@@ -18,7 +18,7 @@ What needs to be done:
     I need to make the color change when change the month (looks cool)<br>
 
 Needed php Scripts:
-    getEventsForMonth.php takes in monthIndex, yearIndex and returns a list of the events (titles and datetime)<br>
+    getEventsForMonth.php takes in monthIndex, yearIndex and returns a list unique days (just ints is fine) which contain events<br>
     getEventsForDay.php takes in a monthIndex, dayIndex, and yearIndex and returns a list of all events (titles and datetime)<br>
     editEvent.php takes the eventID, newTitle, newDatetime doesn't need to return anything<br>
     deleteEvent.php takes the eventID and doesn't need to return anything<br>
