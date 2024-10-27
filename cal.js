@@ -11,6 +11,7 @@ const monthColors = ["CadetBlue", "Crimson", "DarkOliveGreen", "DarkTurquoise", 
 let listOfAllDivs = document.getElementsByTagName("div");
 let eventDivs = [""];
 let currDate = new Date();
+let yearsVisited = [2024];
 
 function daysInMonth(month, year){
     let newDate = new Date(year, month+1, 0);
@@ -18,6 +19,9 @@ function daysInMonth(month, year){
 }
 
 function setUpCalendar() {
+    if(!localStorage.yearsVisited){
+        localStorage.setItem("yearsVisited", JSON.stringify(yearsVisited));
+    }
     changeCalendarColor(currDate.getMonth());
     monthLabel.innerHTML = mString(currDate) + " " + currDate.getFullYear();
     let firstDayOfMonth = new Date(currDate.getFullYear(), currDate.getMonth(), 1).getDay();
@@ -76,16 +80,19 @@ function prevMonth() {
 }
 
 function checkNewYear(year){
-    /*
-    * Needs to get CSRF Token
-    * Needs to call the current php file
-    * */
-    const data = {"newYear":year, "csrfToken":1};
-    fetch("login_ajax.php", {
+    yearsVisited = JSON.parse(localStorage.getItem("yearsVisited"));
+    if(yearsVisited.includes(year)){
+        return;
+    }
+    yearsVisited.push(year);
+    localStorage.setItem("yearsVisited", JSON.stringify(yearsVisited));
+    let data = {"newYear": year};
+    fetch("newYear.php", {
         method: 'POST',
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' }
-    }).catch(err => console.log(err))
+    }).then((response) => setUpCalendar())
+        .catch(err => console.error(err));
     //just needs to call a php script and send it the new year
 }
 
@@ -155,6 +162,8 @@ function logIn(){
                 document.getElementById("createAccountForm").style.display = "none";
                 document.getElementById("userGreeting").style.display = "block";
                 document.getElementById("AddEventForm").style.display = "block";
+                localStorage.setItem("csrfToken", data.csrfToken);
+                localStorage.setItem("userID", data.userID);
             } else {
                 console.log(`You were not logged in: ${data.message}`);
             }
@@ -217,21 +226,39 @@ function highlightEvent(){
 }
 
 function editEvent(){
-    //if(eventSelected.children)
+    if(eventSelected.children[5].value == false || eventSelected.children[8].value == false){
+        return;
+    }
     console.log(eventSelected.children[0].value);
     console.log(eventSelected.children[5].value);
     console.log(eventSelected.children[8].value);
+    let data = {"eventID":this.parentElement.children[0].value, "newTitle":this.parentElement.children[5].value, "newDatetime":eventSelected.children[8].value};
+    fetch("editEvent.php", {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' }
+    }).catch(err => console.error(err));
 }
 
 function shareEvent(){
     console.log(this.parentElement.children[0].value); //event ID
-    console.log(this.parentElement.children[1].value); //event Title
-    console.log(this.parentElement.children[2].value); //event datetime
-    console.log(this.parentElement.children[11].value);
+    console.log(this.parentElement.children[11].value); //new user
+    let data = {"eventID":this.parentElement.children[0].value, "newOwner":this.parentElement.children[11].value}
+    fetch("shareEvent.php", {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' }
+    }).catch(err => console.error(err));
 }
 
 function deleteEvent(){
     console.log(this.parentElement.children[0].value); //event ID
+    let data = {"eventID":this.parentElement.children[0].value}
+    fetch("deleteEvent.php", {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' }
+    }).catch(err => console.error(err));
 }
 
 document.getElementById("AddEventForm").style.display = "none";
