@@ -1,34 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
     <title>WashU Calendar :)</title>
 </head>
+
 <body>
     <div class="calendar">
-        <div class="arrow"><button id = 'prevMonthButton' type="button" class="arrowButton"><-</button></div>
+        <div class="arrow"><button id='prevMonthButton' type="button" class="arrowButton"><-< /button></div>
         <div class="month" id="monthLabel">October 2024</div>
-        <div class="arrow"><button id = 'nextMonthButton' type="button" class="arrowButton">-></button></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
+        <div class="arrow"><button id='nextMonthButton' type="button" class="arrowButton">-></button></div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
         <div class="vertical">
             <form name="LogIn" autocomplete="off" id="LogInForm">
-                    <label for="user">User ID:</label>
-                    <input type="number" name="user" id="user" /> <!--creates a simple form to handle logins-->
-                    <label for="password">Password:</label>
-                    <input type="password" name="password" id="password" />
-                    <input type="submit" value="Log In!" id="logInButton"/>
+                <label for="user">User ID:</label>
+                <input type="number" name="user" id="user" /> <!--creates a simple form to handle logins-->
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" />
+                <input type="hidden" name="token" value="<?php echo $_SESSION['token']; ?>" />
+                <input type="submit" value="Log In!" id="logInButton" />
+
             </form>
-            <form name="createAccountForm" autocomplete="off" id = 'createAccountForm'>
+            <form name="createAccountForm" autocomplete="off" id='createAccountForm'>
                 <label for="createPassword">New Account Password:</label>
                 <input type="password" name="createPassword" id="createPassword" />
-                <input type="submit" value="Create Account!" id="createAccountButton"/>
+                <input type="submit" value="Create Account!" id="createAccountButton" />
             </form>
             <p id="userGreeting">Hello User #3</p>
             <button id="logOut">Log Out</button>
@@ -42,48 +60,118 @@
                     <input type="checkbox" name="recurringCheckBox" id="recurringCheckBox" />
                 </p>
                 <p>
-                    <input type="submit" value="Add Event" id="addEventButton"/>
+                    <input type="submit" value="Add Event" id="addEventButton" />
                 </p>
             </form>
         </div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
-        <div class="day"><p></p></div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
+        <div class="day">
+            <p></p>
+        </div>
     </div>
     <div id="bottomHalf" class="bottomHalf">
-        <div id="dayListing" class = "dayListing">
+        <div id="dayListing" class="dayListing">
             <h1 id="dayOfEvent">October, 4 2004</h1>
             <ul id="listOfEvents">
                 <!--<li><div class = "eventListed">
@@ -95,9 +183,9 @@
             </ul>
         </div>
         <div id="eventSelected">
-            <input type="hidden" value ="1">
-            <input type="hidden" value ="">
-            <input type="hidden" value = "">
+            <input type="hidden" value="1">
+            <input type="hidden" value="">
+            <input type="hidden" value="">
             <h2 id="nameOfEvent">This is the title of an event</h2>
             <label for="NewTitle">Edit Title:</label>
             <input type="text" name="title" id="NewTitle" /> <!--creates a simple form to handle logins-->
@@ -116,4 +204,5 @@
     <div class="divWithDot"><span class="dot"></span></div>
     <script src="cal.js"></script>
 </body>
+
 </html>

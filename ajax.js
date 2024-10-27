@@ -5,7 +5,7 @@ function loginAjax(event) {
     const password = document.getElementById("password").value; // Get the password from the form
 
     // Make a URL-encoded string for passing POST data:
-    const data = { 'username': username, 'password': password};
+    const data = { 'username': username, 'password': password };
 
     fetch("login_ajax.php", {
         method: 'POST',
@@ -22,4 +22,3 @@ function loginAjax(event) {
         })
         .catch(err => console.error(err));
 }
-//await fetch
