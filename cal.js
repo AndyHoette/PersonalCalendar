@@ -163,5 +163,5 @@ createAccountButton.addEventListener("click", (e) =>{e.preventDefault(); createA
 
 
 for(let i = 0; i<dayDivs.length; i++){
-    dayDivs[i].addEventListener('click', function(){displayDate(this)}, false);
+    dayDivs[i].addEventListener('click', function(){displayDate(this)}, false); //this is a comment
 }

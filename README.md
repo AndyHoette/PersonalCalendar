@@ -15,5 +15,5 @@ What needs to be done:
     We need to be able to add an Event in every year in the yearsVisited database
     We need to be able to add every recurring event for a given years
     I need to make it so that events that repeat yearly all get added when going to a new year
-    I need to make the color change when change the month
+    I need to make the color change when change the month (looks cool)
     
