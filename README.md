@@ -5,11 +5,15 @@ Andy Hoette - 518194
 
 Josh Lee - 518325
 
-What needs to be done on the front end (as of 26 @ 00:35):
-    Add indicator for dates
-    Add dates events
-    Add edit dates events
-    Make log in actually work
-    Make add event actually work
-    Need to make share and edits value immediately if blank entry
+What needs to be done:
+    I need to adjust Login ajax request to fit our code
+    We need to be able to share event given an eventID and userID to share to
+    We need to be able to delete events given an eventID
+    We need to be able to edit events given an eventID, the new Title, new Datetime
+    We need to be able to create an account given a password and send back the ID
+    We need to be able to get all the events from a certain month in a format similar to {id: 330, title:"This is obj title", when:new Date()}
+    We need to be able to add an Event in every year in the yearsVisited database
+    We need to be able to add every recurring event for a given years
+    I need to make it so that events that repeat yearly all get added when going to a new year
+    I need to make the color change when change the month
     

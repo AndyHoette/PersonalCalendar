@@ -99,6 +99,7 @@ function logIn(){
     console.log(this.parentElement);
     //console.log("LogIn Clicked");
     document.getElementById("LogInForm").style.display = "none";
+    document.getElementById("createAccountForm").style.display = "none";
     document.getElementById("userGreeting").style.display = "block";
     document.getElementById("AddEventForm").style.display = "block";
 }
@@ -136,6 +137,11 @@ function shareEvent(){
     console.log(this.parentElement.children[2].value); //event datetime
     console.log(this.parentElement.children[11].value);
 }
+
+function deleteEvent(){
+    console.log(this.parentElement.children[0].value); //event ID
+}
+
 document.getElementById("AddEventForm").style.display = "none";
 document.getElementById("userGreeting").style.display = "none";
 document.getElementById("eventSelected").style.display = "none";
@@ -148,9 +154,11 @@ document.getElementById("prevMonthButton").addEventListener('click', prevMonth, 
 document.getElementById("nextMonthButton").addEventListener('click', nextMonth, false);
 document.getElementById("eventEditButton").addEventListener('click', editEvent, false);
 document.getElementById("eventShareButton").addEventListener('click', shareEvent, false);
+document.getElementById("eventDeleteButton").addEventListener('click', deleteEvent, false);
 logInButton.addEventListener("click", logIn, false);
 logInButton.addEventListener("click", (e)=>{e.preventDefault(); logIn();}, false);
 document.getElementById('addEventButton').addEventListener("click", (e) =>{e.preventDefault(); addEvent();}, false);
+createAccountButton.addEventListener("click", (e) =>{e.preventDefault(); createAccount(createAccountButton);}, false);
 createAccountButton.addEventListener("click", (e) =>{e.preventDefault(); createAccount(createAccountButton);}, false);
 
 
