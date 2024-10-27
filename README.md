@@ -19,7 +19,7 @@ What needs to be done:
 
 Needed php Scripts:
     getEventsForMonth.php takes in monthIndex, yearIndex and returns a list unique days (just ints is fine) which contain events<br>
-    getEventsForDay.php takes in a monthIndex, dayIndex, and yearIndex and returns a list of all events (titles and datetime)<br>
+    getEventsForDay.php takes in a monthIndex, dayIndex, and yearIndex and returns a list of all events (title and datetime, and id)<br>
     editEvent.php takes the eventID, newTitle, newDatetime doesn't need to return anything<br>
     deleteEvent.php takes the eventID and doesn't need to return anything<br>
     newYear.php takes newYear and needs to create a new event for all recurring events in that year and doesn't need to return anything<br>
