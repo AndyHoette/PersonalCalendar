@@ -47,6 +47,7 @@ if ($cnt == 1 && password_verify($pwd_guess, $pwd_hash)) {
 
     echo json_encode(array(
         "success" => true,
+        "user_id" => $db_user_id,
         "token" => $_SESSION['token']
     ));
     exit;
