@@ -10,11 +10,12 @@ If a date has a dot then it has an event. Click on the day to view all the event
 <br>
 Link to Website: http://ec2-18-224-2-189.us-east-2.compute.amazonaws.com/~ahhoette/module5-group-module5-518194-518325/
 <br>
-We have 3 things for our creative portion:
-    -We have annual recurring events
-    -We have sharing events
-    -Color of calendar changes based on month
+We have 3 things for our creative portion: <br>
+    -We have annual recurring events<br>
+    -We have sharing events<br>
+    -Color of calendar changes based on month<br>
 
+<br><br><br><br><br><br>
 Needed php Scripts:
     getEventsForMonth.php takes in monthIndex, yearIndex and returns a list unique days (just ints is fine) which contain events<br>
     getEventsForDay.php takes in a monthIndex, dayIndex, and yearIndex and returns a list of all events (title and datetime, and id)<br>
