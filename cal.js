@@ -178,12 +178,13 @@ function logIn(){
     const password = document.getElementById("password").value;
     const userIdLogIn = document.getElementById("password").value;
     const data = {"userID": userIdLogIn, "password":password};
+    console.log(data)
     fetch("login_ajax.php", {
         method: 'POST',
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' }
     })
-        .then(response => response.json())
+        .then(response => console.log(response))/*response => response.json())
         .then(answer => { //returns a csrfToken, userID, and success bool
             if (data.success) {
                 document.getElementById("LogInForm").style.display = "none";
@@ -197,7 +198,7 @@ function logIn(){
                 console.log(`You were not logged in: ${data.message}`);
             }
         })
-        .catch(err => console.error(err));
+        .catch(err => console.error(err));*/
     // document.getElementById("LogInForm").style.display = "none";
     // document.getElementById("createAccountForm").style.display = "none";
     // document.getElementById("userGreeting").style.display = "block";
@@ -205,7 +206,7 @@ function logIn(){
 }
 
 function logOut(){ //logs the user out
-    fetch("login_ajax.php", {
+    fetch("logout.php", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
     }).then(response => {
@@ -345,7 +346,6 @@ document.getElementById("nextMonthButton").addEventListener('click', nextMonth, 
 document.getElementById("eventEditButton").addEventListener('click', editEvent, false);
 document.getElementById("eventShareButton").addEventListener('click', shareEvent, false);
 document.getElementById("eventDeleteButton").addEventListener('click', deleteEvent, false);
-logInButton.addEventListener("click", logIn, false);
 logInButton.addEventListener("click", (e)=>{e.preventDefault(); logIn();}, false);
 document.getElementById('addEventButton').addEventListener("click", (e) =>{e.preventDefault(); addEvent();}, false);
 createAccountButton.addEventListener("click", (e) =>{e.preventDefault(); createAccount(createAccountButton);}, false);
