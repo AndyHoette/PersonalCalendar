@@ -13,6 +13,13 @@ $json_str = file_get_contents('php://input');
 $json_obj = json_decode($json_str, true);
 
 
+if(!isset($json_obj['userID']) || !isset($json_obj['password'])){
+    echo json_encode(array(
+        "success" => false,
+        "message" => "fields not set"
+    ));
+}
+
 $user_id = $json_obj['userID'];
 $passwordGuess = $json_obj['password'];
 
