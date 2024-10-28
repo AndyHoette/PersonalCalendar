@@ -16,33 +16,6 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 
-
-
-
-if (!isset($json_obj['csrfToken']) || empty(trim($json_obj['csrfToken'])) || empty(trim($json_obj['title'])) || empty(trim($json_obj['year'])) || empty(trim($json_obj['month'])) || empty(trim($json_obj['day'])) || empty(trim($json_obj['hour'])) || empty(trim($json_obj['minute']))) {
-    echo json_encode(array(
-        "success" => false,
-        "message" => "Invalid input."
-    ));
-    exit;
-}
-
-
-echo json_encode(array(
-    "success" => false,
-    "message" => "Here not work"
-));
-exit;
-
-
-if (!isset($json_obj['csrfToken']) || !hash_equals($json_obj['csrfToken'], $json_obj['csrfToken'])) {
-    echo json_encode(array(
-        "success" => false,
-        "message" => "Invalid CSRF token."
-    ));
-    exit;
-}
-
 $owner = $_SESSION['user_id'];
 $title = $json_obj['title'];
 $year = $json_obj['year'];
@@ -53,6 +26,28 @@ $minute = $json_obj['minute'];
 
 //not sure about recurring
 $recurring = isset($json_obj['recurring']) ? 1 : 0;
+
+
+
+
+if (!isset($json_obj['csrfToken']) || empty(trim($json_obj['csrfToken'])) || !isset(($json_obj['title'])) || !isset(($json_obj['year'])) || !isset(($json_obj['month'])) || !isset(($json_obj['day'])) || !isset(($json_obj['hour'])) || !isset(($json_obj['minute']))) {
+    echo json_encode(array(
+        "success" => false,
+        "message" => "Invalid input."
+    ));
+    exit;
+}
+
+
+
+
+if (!isset($json_obj['csrfToken']) || !hash_equals($json_obj['csrfToken'], $json_obj['csrfToken'])) {
+    echo json_encode(array(
+        "success" => false,
+        "message" => "Invalid CSRF token."
+    ));
+    exit;
+}
 
 
 
