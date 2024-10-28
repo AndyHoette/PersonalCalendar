@@ -60,6 +60,4 @@ if ($cnt == 1 && password_verify($pwd_guess, $pwd_hash)) {
     exit;
 }
 
-// Close statement
-$stmt->close();
 ?>
