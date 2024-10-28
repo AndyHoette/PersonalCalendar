@@ -46,7 +46,7 @@ $recurring = isset($json_obj['recurring']) ? 1 : 0;
 
 
 
-$stmt = $mysqli->prepare("INSERT INTO events (userID, title, year, month, day, hour, minute, recurring) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+$stmt = $mysqli->prepare("INSERT INTO events (id, title, year, month, day, hour, minute, recurringBoolean) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 if (!$stmt) {
     echo json_encode(array(
         "success" => false,
