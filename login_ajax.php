@@ -29,7 +29,7 @@ $stmt->fetch();
 // Verify password and login if successful
 if (password_verify($passwordGuess, $pwd_hash)) {
     // Regenerate session ID to prevent session fixation
-    session_regenerate_id(true);
+
 
     // Login succeeded; set session variables
     $_SESSION['user_id'] = $user_id;
@@ -37,8 +37,12 @@ if (password_verify($passwordGuess, $pwd_hash)) {
     // Generate CSRF token
     $_SESSION['token'] = bin2hex(random_bytes(32));
 
-    header('Location: unauthorized.php');
-
+    echo json_encode(array(
+        "success" => true,
+        "user_id" => $user_id,
+        "token" => $_SESSION['token']
+    ));
+    exit;
 
 }
 echo json_encode(array(
