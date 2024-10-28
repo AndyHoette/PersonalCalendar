@@ -18,7 +18,7 @@ $_SESSION['token'] = bin2hex(random_bytes(32));
 
 
 // Prepare SQL query for users table with only 'id' and 'password'
-$stmt = $mysqli->prepare("SELECT COUNT(*), id, password FROM users WHERE id = ?");
+$stmt = $mysqli->prepare("SELECT password FROM users WHERE id = ?");
 //$stmt = $mysqli->prepare("SELECT password FROM users WHERE id=?");
 if (!$stmt) {
     echo json_encode(array(
