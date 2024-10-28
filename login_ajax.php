@@ -17,7 +17,7 @@ $user_id = $json_obj['userID'];
 $passwordGuess = $json_obj['password'];
 
 
-$_SESSION['csrfToken'] = bin2hex(random_bytes(32));
+//$_SESSION['csrfToken'] = bin2hex(random_bytes(32));
 
 
 // Prepare SQL query for users table with only 'id' and 'password'
@@ -38,7 +38,7 @@ $stmt->bind_result($pwd_hash);
 $stmt->fetch();
 
 // Verify password and login if successful
-if (password_verify($passwordGuess, hash: $pwd_hash)) {
+if (password_verify($passwordGuess, $pwd_hash)) {
     // Login succeeded; set session variables
     $_SESSION['user_id'] = $user_id;
 

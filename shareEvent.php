@@ -3,7 +3,7 @@ session_start();
 require 'database.php';
 
 // Check if user is logged in
-if (empty($json_obj["userID"])) {
+if (!isset($_SESSION["user_id"])) {
     echo json_encode(array(
         "success" => false,
         "message" => "User not logged in."
@@ -21,7 +21,7 @@ if (!isset($json_obj['csrfToken']) || !hash_equals($json_obj['csrfToken'], $json
 }
 
 // Validate and sanitize inputs
-if (!isset($json_obj['eventID'], $json_obj['userID']) || !is_numeric($json_obj['eventID']) || empty(trim($json_obj['userID']))) {
+if (!isset($json_obj['eventID'], $_SESSION['user_id']) || !is_numeric($json_obj['eventID']) || empty(trim($_SESSION['user_id']))) {
     exit;
 }
 

@@ -1,5 +1,5 @@
 <?php
-
+header("Content-Type: application/json");
 $mysqli = new mysqli('localhost', 'test', 'password', 'leeHoetteCal');
 
 if ($mysqli->connect_errno) {
