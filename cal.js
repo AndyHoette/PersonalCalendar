@@ -14,6 +14,7 @@ const monthColors = ["CadetBlue", "Crimson", "DarkOliveGreen", "DarkTurquoise", 
 let eventDivs = []; //this we set later in the code to be all the eventDivs
 let currDate = new Date(); //this is our date variable that defaults to right now
 let yearsVisited = [2024]; //this is an arr of years we visited (used for recurring)
+let debug = true;
 
 function daysInMonth(month, year){ //this just returns the number of days in a month
     let newDate = new Date(year, month+1, 0);
@@ -142,7 +143,7 @@ function displayDate(dateDivInst){
     })
         .then(response => response.json())
         .then(events => { //returns a list for events for that date
-            for(let i = 0; i<events.length; i++){ //for all of these events makes a <li> <div> 3 hidden <input>s and a <p>
+            for(let i = 0; i<events.length; i++){ //for all of these events makes a <li> <div> 7 hidden <input>s and a <p>
                 let listItem = document.createElement("li");
                 let itemDiv = document.createElement("div");
                 itemDiv.className = "eventListed";
@@ -157,8 +158,24 @@ function displayDate(dateDivInst){
                 itemDiv.appendChild(hidden2);
                 let hidden3 = document.createElement("input");
                 hidden3.type = "hidden";
-                hidden3.value = events[i].when;
+                hidden3.value = events[i].year;
                 itemDiv.appendChild(hidden3);
+                let hidden4 = document.createElement("input");
+                hidden4.type = "hidden";
+                hidden4.value = events[i].month;
+                itemDiv.appendChild(hidden4);
+                let hidden5 = document.createElement("input");
+                hidden5.type = "hidden";
+                hidden5.value = events[i].day;
+                itemDiv.appendChild(hidden5);
+                let hidden6 = document.createElement("input");
+                hidden6.type = "hidden";
+                hidden6.value = events[i].hour;
+                itemDiv.appendChild(hidden6);
+                let hidden7 = document.createElement("input");
+                hidden7.type = "hidden";
+                hidden7.value = events[i].minute;
+                itemDiv.appendChild(hidden7);
                 let itemP = document.createElement("p");
                 itemP.innerHTML = hidden2.value;
                 itemDiv.appendChild(itemP);
@@ -178,27 +195,35 @@ function logIn(){
     const password = document.getElementById("password").value;
     const userIdLogIn = document.getElementById("password").value;
     const data = {"userID": userIdLogIn, "password":password};
-    console.log(data)
-    fetch("login_ajax.php", {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: { 'Content-Type': 'application/json' }
-    })
-        .then(response => console.log(response))/*response => response.json())
-        .then(answer => { //returns a csrfToken, userID, and success bool
-            if (data.success) {
-                document.getElementById("LogInForm").style.display = "none";
-                document.getElementById("createAccountForm").style.display = "none";
-                document.getElementById("userGreeting").style.display = "block"; //show the next level
-                document.getElementById("AddEventForm").style.display = "block";
-                localStorage.setItem("csrfToken", answer.csrfToken); //set the local vars correctly
-                localStorage.setItem("userID", answer.userID);
-                document.getElementById("userGreeting").innerHTML = "Hello User #" + answer.userID;
-            } else {
-                console.log(`You were not logged in: ${data.message}`);
-            }
+    console.log(data);
+    if(debug){
+        document.getElementById("LogInForm").style.display = "none";
+        document.getElementById("createAccountForm").style.display = "none";
+        document.getElementById("userGreeting").style.display = "block"; //show the next level
+        document.getElementById("AddEventForm").style.display = "block";
+    }
+    else {
+        fetch("login_ajax.php", {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {'Content-Type': 'application/json'}
         })
-        .catch(err => console.error(err));*/
+            .then(response => response.json())
+            .then(answer => { //returns a csrfToken, userID, and success bool
+                if (data.success) {
+                    document.getElementById("LogInForm").style.display = "none";
+                    document.getElementById("createAccountForm").style.display = "none";
+                    document.getElementById("userGreeting").style.display = "block"; //show the next level
+                    document.getElementById("AddEventForm").style.display = "block";
+                    localStorage.setItem("csrfToken", answer.csrfToken); //set the local vars correctly
+                    localStorage.setItem("userID", answer.userID);
+                    document.getElementById("userGreeting").innerHTML = "Hello User #" + answer.userID;
+                } else {
+                    console.log(`You were not logged in: ${data.message}`);
+                }
+            })
+            .catch(err => console.error(err));
+    }
     // document.getElementById("LogInForm").style.display = "none";
     // document.getElementById("createAccountForm").style.display = "none";
     // document.getElementById("userGreeting").style.display = "block";
@@ -220,7 +245,7 @@ function logOut(){ //logs the user out
         localStorage.clear(); //clears the local storage
         setUpCalendar();
         })
-        .catch(err => console.log(err))
+        .catch(err => console.log(err));
 }
 
 function createAccount(b){ //creates a user
@@ -231,20 +256,49 @@ function createAccount(b){ //creates a user
         body: JSON.stringify(data)
     }).then(response => response.json())
         .then(answer => {
-            document.getElementById("LogInForm").style.display = "none";
-            document.getElementById("createAccountForm").style.display = "none";
-            document.getElementById("userGreeting").style.display = "block"; //show the next level
-            document.getElementById("AddEventForm").style.display = "block";
-            document.getElementById("logOut").style.display = "block";
-            localStorage.setItem("csrfToken", answer.csrfToken); //set the local vars correctly
-            localStorage.setItem("userID", answer.userID);
-            document.getElementById("userGreeting").innerHTML = "Hello User #" + answer.userID;})
-        .catch(err => console.log(err))
+            if(answer.success){
+                document.getElementById("LogInForm").style.display = "none";
+                document.getElementById("createAccountForm").style.display = "none";
+                document.getElementById("userGreeting").style.display = "block"; //show the next level
+                document.getElementById("AddEventForm").style.display = "block";
+                document.getElementById("logOut").style.display = "block";
+                localStorage.setItem("csrfToken", answer.csrfToken); //set the local vars correctly
+                localStorage.setItem("userID", answer.userID);
+                document.getElementById("userGreeting").innerHTML = "Hello User #" + answer.userID;
+            }
+        }).catch(err => console.log(err));
+}
+
+function checkValidDate(year, month, day, hour, minute){
+    if(year<0 || year>65535){
+        return false;
+    }
+    else if(month<0 || month>11){
+        return false;
+    }
+    else if(day<0 || day>daysInMonth(month, year)){
+        return false;
+    }
+    else if(hour<0 || hour>23){
+        return false;
+    }
+    else if(minute<0 || minute>59){
+        return false;
+    }
+    return true;
 }
 
 function addEvent(){
     let newTitle = document.getElementById("title").value;
-    let dateToAdd = new Date(document.getElementById('EventDatetime').value);
+    let year = document.getElementById("year");
+    let month = document.getElementById("month");
+    let day = document.getElementById("day");
+    let hour = document.getElementById("hour");
+    let minute = document.getElementById("minute");
+    if(!checkValidDate(year,month,day,hour,minute)){
+        return;
+    }
+    const dateToAdd = {"year":year, "month":month, "day":day, "hour":hour, "minute":minute};
     if(document.getElementById("recurringCheckBox").checked){ //if its supposed to recurring send it there
         addEventRecurring(newTitle, dateToAdd);
     }
@@ -255,7 +309,8 @@ function addEvent(){
 
 function addEventRecurring(title, dateToAdd){
     for(let i = 0; i<yearsVisited.length; i++){
-        let newDateToAdd = new Date(yearsVisited[i], dateToAdd.getMonth(), dateToAdd.getDate(), dateToAdd.getHours(), dateToAdd.getMinutes());
+        let newDateToAdd = dateToAdd;
+        newDateToAdd.year = yearsVisited[i]
         if(i===0){
             addEventAJAX(title, newDateToAdd, true); //makes only the first instance of it recurring
         }
@@ -269,13 +324,13 @@ function addEventAJAX(title, dateToAdd, recurring){
     if(localStorage.getItem("csrfToken")==null){
         return;
     }
-    const data = {"title":title, "newDatetime":dateToAdd, "csrfToken":localStorage.getItem("csrfToken"), "recurring": recurring };
+    const data = {"title":title, "year":dateToAdd.year, "month":dateToAdd.month, "day":dateToAdd.day, "hour":dateToAdd.hour, "minute":dateToAdd.minute, "csrfToken":localStorage.getItem("csrfToken"), "recurring": recurring };
     fetch("addEvent.php", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
     }).then(response => setUpCalendar()) //must set up the calendar after we add an event
-        .catch(err => console.log(err))
+        .catch(err => console.log(err));
 }
 
 function highlightEvent(){ //this shows the event in the bottom right
