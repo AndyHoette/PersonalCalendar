@@ -27,8 +27,7 @@ $user_id = $json_obj['userID'];
 $passwordGuess = $json_obj['password'];
 
 
-exit;
-//$_SESSION['csrfToken'] = bin2hex(random_bytes(32));
+$_SESSION['csrfToken'] = bin2hex(random_bytes(32));
 
 
 // Prepare SQL query for users table with only 'id' and 'password'
