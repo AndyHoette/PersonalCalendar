@@ -301,11 +301,11 @@ function checkValidDate(year, month, day, hour, minute){
 
 function addEvent(){
     let newTitle = document.getElementById("title").value;
-    let year = document.getElementById("year");
-    let month = document.getElementById("month");
-    let day = document.getElementById("day");
-    let hour = document.getElementById("hour");
-    let minute = document.getElementById("minute");
+    let year = document.getElementById("year").value;
+    let month = document.getElementById("month").value;
+    let day = document.getElementById("day").value;
+    let hour = document.getElementById("hour").value;
+    let minute = document.getElementById("minute").value;
     if(!checkValidDate(year,month,day,hour,minute)){
         return;
     }
