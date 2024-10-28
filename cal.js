@@ -221,7 +221,7 @@ function logIn(){
                     document.getElementById("createAccountForm").style.display = "none";
                     document.getElementById("userGreeting").style.display = "block"; //show the next level
                     document.getElementById("AddEventForm").style.display = "block";
-                    localStorage.setItem("csrfToken", answer.csrfToken); //set the local vars correctly
+                    localStorage.setItem("csrfToken", answer.token); //set the local vars correctly
                     localStorage.setItem("userID", answer.user_id);
                     document.getElementById("userGreeting").innerHTML = "Hello User #" + answer.user_id;
                 } else {
