@@ -15,7 +15,7 @@ if (empty($json_obj["user_id"])) {
 }
 
 // Validate CSRF token
-if (!isset($json_obj['token']) || !hash_equals($json_obj['token'], $json_obj['token'])) {
+if (!isset($json_obj['csrfToken']) || !hash_equals($json_obj['csrfToken'], $json_obj['csrfToken'])) {
     echo json_encode(array(
         "success" => false,
         "message" => "Invalid CSRF token."
@@ -36,6 +36,7 @@ $monthIndex = $json_obj['monthIndex'];
 $yearIndex = $json_obj['yearIndex'];
 $user_id = $json_obj['user_id'];
 
+// 
 // Prepare SQL query to fetch events
 $stmt = $mysqli->prepare("SELECT id, title, eventDateTime FROM events WHERE owner = ? AND MONTH(eventDateTime) = ? AND YEAR(eventDateTime) = ?");
 if (!$stmt) {

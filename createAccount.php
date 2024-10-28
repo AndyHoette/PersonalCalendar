@@ -14,7 +14,7 @@
     header("Content-Type: application/json");
 
     // Validate CSRF token
-    if (!isset($json_obj['token']) || !hash_equals($json_obj['token'], $json_obj['token'])) {
+    if (!isset($json_obj['csrfToken']) || !hash_equals($json_obj['csrfToken'], $json_obj['csrfToken'])) {
         echo json_encode(array(
             "success" => false,
             "message" => "Invalid CSRF token."
@@ -36,7 +36,7 @@
     $passwordAttempt = htmlentities($json_obj["password"]);
 
     // Check if username is available
-    $stmt = $mysqli->prepare("SELECT COUNT(*) FROM users WHERE username=?");
+    $stmt = $mysqli->prepare("SELECT users WHERE username=?");
     if (!$stmt) {
         echo json_encode(array(
             "success" => false,
@@ -78,7 +78,7 @@
             "success" => true,
             "message" => "Account created successfully.",
             "user_id" => 'user_id',
-            "token" => $_SESSION['token']
+            "token" => 'token'
         ));
     } else {
         // Username is already taken

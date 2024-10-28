@@ -15,7 +15,7 @@ if (empty($json_obj["user_id"])) {
 }
 
 // Validate CSRF token
-if (!isset($json_obj['token']) || !hash_equals($json_obj['token'], $json_obj['token'])) {
+if (!isset($json_obj['csrfToken']) || !hash_equals($json_obj['csrfToken'], $json_obj['csrfToken'])) {
     echo json_encode(array(
         "success" => false,
         "message" => "Invalid CSRF token."

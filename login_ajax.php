@@ -1,4 +1,7 @@
 <?php
+
+ini_set("session.cookie_httponly", 1);
+
 session_start();
 require 'database.php';
 
@@ -14,7 +17,7 @@ $user_id = $json_obj['userID'];
 $passwordGuess = $json_obj['password'];
 
 
-$_SESSION['token'] = bin2hex(random_bytes(32));
+$_SESSION['csrfToken'] = bin2hex(random_bytes(32));
 
 
 // Prepare SQL query for users table with only 'id' and 'password'
@@ -42,7 +45,7 @@ if (password_verify($passwordGuess, $pwd_hash)) {
     $_SESSION['user_id'] = $user_id;
 
     // Generate CSRF token
-    $_SESSION['token'] = bin2hex(random_bytes(32));
+    $_SESSION['csrfToken'] = bin2hex(random_bytes(32));
 
     echo json_encode(array(
         "success" => true,
