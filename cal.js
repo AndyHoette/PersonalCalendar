@@ -209,7 +209,7 @@ function logIn(){
         fetch("login_ajax.php", {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
-            body: JSON.stringify(data)
+            body: JSON.stringify({userID: userIdLogIn, password: password})
         })
             .then(response => response.json())
             .then(answer => { //returns a csrfToken, userID, and success bool
