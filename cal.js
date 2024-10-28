@@ -250,7 +250,7 @@ function logOut(){ //logs the user out
 
 function createAccount(b){ //creates a user
     let data = {"password":b.parentElement.children[1].value}; //gets the password
-    fetch("logout.php", {
+    fetch("creatAccount.php", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -414,6 +414,5 @@ document.getElementById("eventShareButton").addEventListener('click', shareEvent
 document.getElementById("eventDeleteButton").addEventListener('click', deleteEvent, false);
 logInButton.addEventListener("click", (e)=>{e.preventDefault(); logIn();}, false);
 document.getElementById('addEventButton').addEventListener("click", (e) =>{e.preventDefault(); addEvent();}, false);
-createAccountButton.addEventListener("click", (e) =>{e.preventDefault(); createAccount(createAccountButton);}, false);
 createAccountButton.addEventListener("click", (e) =>{e.preventDefault(); createAccount(createAccountButton);}, false);
 logOutButton.addEventListener("click", logOut, false);
