@@ -213,6 +213,7 @@ function logIn(){
         })
             .then(response => response.json())
             .then(answer => { //returns a csrfToken, userID, and success bool
+                console.log("this is a print");
                 console.log(answer);
                 if (answer.success) {
                     console.log("log in good");
