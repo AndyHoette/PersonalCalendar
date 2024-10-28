@@ -23,7 +23,7 @@
     }
 
     // Validate that required fields are set and sanitize inputs
-    if (!isset($_POST['username'], $_POST['password']) || empty(trim($_POST['username'])) || empty(trim($_POST['password']))) {
+    if (!isset($json_obj['user_id'], $json_obj['password']) || empty(trim($json_obj['user_id'])) || empty(trim($json_obj['password']))) {
         echo json_encode(array(
             "success" => false,
             "message" => "Invalid input."
@@ -32,8 +32,8 @@
     }
 
     // Sanitize inputs
-    $usernameAttempt = htmlentities($_POST["username"]);
-    $passwordAttempt = htmlentities($_POST["password"]);
+    $usernameAttempt = htmlentities($json_obj["username"]);
+    $passwordAttempt = htmlentities($json_obj["password"]);
 
     // Check if username is available
     $stmt = $mysqli->prepare("SELECT COUNT(*) FROM users WHERE username=?");
@@ -77,7 +77,7 @@
         echo json_encode(array(
             "success" => true,
             "message" => "Account created successfully.",
-            "user_id" => $_SESSION['user_id'],
+            "user_id" => 'user_id',
             "token" => $_SESSION['token']
         ));
     } else {

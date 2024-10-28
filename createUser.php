@@ -5,7 +5,7 @@ require 'database.php';
 header("Content-Type: application/json");
 
 // Check if user is logged in
-if (empty($_SESSION["user_id"])) {
+if (empty($json_obj["user_id"])) {
     echo json_encode(array(
         "success" => false,
         "message" => "User not logged in."
@@ -27,7 +27,7 @@ if (!isset($_POST['id'], $_POST['password']) || !is_numeric($_POST['id']) || emp
     exit; // Invalid input, terminate script
 }
 
-$user_id = (int) $_POST['id'];
+$user_id = $json_obj['user_id'];
 $password = htmlentities($_POST['password']);
 
 // Check if user ID is available

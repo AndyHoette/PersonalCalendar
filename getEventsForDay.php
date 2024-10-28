@@ -6,7 +6,7 @@ require 'database.php';
 header("Content-Type: application/json");
 
 // Check if user is logged in
-if (empty($_SESSION["user_id"])) {
+if (empty($json_obj["user_id"])) {
     echo json_encode(array(
         "success" => false,
         "message" => "User not logged in."
@@ -27,7 +27,7 @@ if (!isset($_POST['token']) || !hash_equals($_POST['token'], $_SESSION['token'])
 $monthIndex = (int) $_POST['monthIndex'];
 $dayIndex = (int) $_POST['dayIndex'];
 $yearIndex = (int) $_POST['yearIndex'];
-$user_id = $_SESSION['user_id'];
+$user_id = $json_obj['user_id'];
 
 // Prepare SQL query to fetch events
 $stmt = $mysqli->prepare("SELECT id, title, eventDateTime FROM events WHERE owner = ? AND MONTH(eventDateTime) = ? AND DAY(eventDateTime) = ? AND YEAR(eventDateTime) = ?");
