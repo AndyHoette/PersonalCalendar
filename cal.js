@@ -256,6 +256,7 @@ function createAccount(b){ //creates a user
         body: JSON.stringify(data)
     }).then(response => response.json())
         .then(answer => {
+            console.log(answer);
             if(answer.success){
                 document.getElementById("LogInForm").style.display = "none";
                 document.getElementById("createAccountForm").style.display = "none";

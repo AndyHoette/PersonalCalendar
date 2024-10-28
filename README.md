@@ -8,7 +8,7 @@ Josh Lee - 518325
 If a date has a dot then it has an event. Click on the day to view all the events in that date. Click on the event text to edit, share, or delete it.
 
 <br>
-Link to Website: http://ec2-18-224-2-189.us-east-2.compute.amazonaws.com/~ahhoette/module5-group-module5-518194-518325/
+    Link to Website: http://ec2-18-224-2-189.us-east-2.compute.amazonaws.com/~ahhoette/module5-group-module5-518194-518325/
 <br>
 We have 3 things for our creative portion: <br>
     -We have annual recurring events<br>
