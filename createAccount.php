@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <title>Processing Account Creation</title>
-</head>
-
-<body>
-    <?php
+<?php
     session_start();
     require 'database.php';
 
@@ -88,6 +80,3 @@
         ));
     }
     ?>
-</body>
-
-</html>
