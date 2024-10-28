@@ -15,7 +15,7 @@ if (empty($json_obj["user_id"])) {
 }
 
 // Validate CSRF token
-if (!isset($_POST['token']) || !hash_equals($_POST['token'], $_SESSION['token'])) {
+if (!isset($json_obj['token']) || !hash_equals($json_obj['token'], $json_obj['token'])) {
     echo json_encode(array(
         "success" => false,
         "message" => "Invalid CSRF token."
@@ -24,7 +24,7 @@ if (!isset($_POST['token']) || !hash_equals($_POST['token'], $_SESSION['token'])
 }
 
 // Sanitize inputs
-$eventId = $_POST['eventId'];
+$eventId = $json_obj['eventId'];
 $owner = $json_obj['user_id'];
 
 // Check if the event belongs to the user

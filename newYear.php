@@ -12,7 +12,7 @@ if (empty($json_obj["user_id"])) {
 }
 
 // Validate CSRF token
-if (!isset($_POST['token']) || !hash_equals($_POST['token'], $_SESSION['token'])) {
+if (!isset($json_obj['token']) || !hash_equals($json_obj['token'], $json_obj['token'])) {
     echo json_encode(array(
         "success" => false,
         "message" => "Invalid CSRF token."
@@ -21,11 +21,11 @@ if (!isset($_POST['token']) || !hash_equals($_POST['token'], $_SESSION['token'])
 }
 
 // Validate and sanitize inputs
-if (!isset($_POST['newYear']) || !is_numeric($_POST['newYear'])) {
+if (!isset($json_obj['newYear']) || !is_numeric($json_obj['newYear'])) {
     exit; // Invalid input, terminate script
 }
 
-$newYear = (int) $_POST['newYear'];
+$newYear = (int) $json_obj['newYear'];
 $user_id = $json_obj['user_id'];
 
 // Get all recurring events for the logged-in user

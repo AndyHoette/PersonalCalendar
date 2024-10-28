@@ -14,7 +14,7 @@ if (empty($json_obj["user_id"])) {
 }
 
 // Validate CSRF token
-if (!isset($_POST['token']) || !hash_equals($_POST['token'], $_SESSION['token'])) {
+if (!isset($json_obj['token']) || !hash_equals($json_obj['token'], $json_obj['token'])) {
     echo json_encode(array(
         "success" => false,
         "message" => "Invalid CSRF token."
@@ -23,12 +23,12 @@ if (!isset($_POST['token']) || !hash_equals($_POST['token'], $_SESSION['token'])
 }
 
 // Validate and sanitize inputs
-if (!isset($_POST['id'], $_POST['password']) || !is_numeric($_POST['id']) || empty(trim($_POST['password']))) {
+if (!isset($json_obj['id'], $json_obj['password']) || !is_numeric($json_obj['id']) || empty(trim($json_obj['password']))) {
     exit; // Invalid input, terminate script
 }
 
 $user_id = $json_obj['user_id'];
-$password = htmlentities($_POST['password']);
+$password = htmlentities($json_obj['password']);
 
 // Check if user ID is available
 $stmt = $mysqli->prepare("SELECT COUNT(*) FROM users WHERE id = ?");

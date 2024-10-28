@@ -15,7 +15,7 @@ if (empty($json_obj["user_id"])) {
 }
 
 
-if (!isset($_POST['token'], $_POST['title'], $_POST['eventDateTime']) || empty(trim($_POST['token'])) || empty(trim($_POST['title'])) || empty(trim($_POST['eventDateTime']))) {
+if (!isset($json_obj['token'], $json_obj['title'], $json_obj['eventDateTime']) || empty(trim($json_obj['token'])) || empty(trim($json_obj['title'])) || empty(trim($json_obj['eventDateTime']))) {
     echo json_encode(array(
         "success" => false,
         "message" => "Invalid input."
@@ -24,10 +24,10 @@ if (!isset($_POST['token'], $_POST['title'], $_POST['eventDateTime']) || empty(t
 }
 
 // Sanitize inputs
-$token = (string) $_POST['token'];
-$title = (string) trim($_POST['title']);
-$eventDateTime = (string) trim($_POST['eventDateTime']);
-$recurring = isset($Post['recurring']) ? 1 : 0;
+$token = (string) $json_obj['token'];
+$title = (string) trim($json_obj['title']);
+$eventDateTime = (string) trim($json_obj['eventDateTime']);
+$recurring = isset($json_obj['recurring']) ? 1 : 0;
 
 // Validate CSRF token
 if ($token !== $_SESSION['token']) {

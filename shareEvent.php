@@ -12,7 +12,7 @@ if (empty($json_obj["user_id"])) {
 }
 
 // Validate CSRF token
-if (!isset($_POST['token']) || !hash_equals($_POST['token'], $_SESSION['token'])) {
+if (!isset($json_obj['token']) || !hash_equals($json_obj['token'], $json_obj['token'])) {
     echo json_encode(array(
         "success" => false,
         "message" => "Invalid CSRF token."
@@ -21,12 +21,12 @@ if (!isset($_POST['token']) || !hash_equals($_POST['token'], $_SESSION['token'])
 }
 
 // Validate and sanitize inputs
-if (!isset($_POST['eventID'], $_POST['newOwner']) || !is_numeric($_POST['eventID']) || empty(trim($_POST['newOwner']))) {
+if (!isset($json_obj['eventID'], $json_obj['newOwner']) || !is_numeric($json_obj['eventID']) || empty(trim($json_obj['newOwner']))) {
     exit;
 }
 
-$eventID = (int) $_POST['eventID'];
-$newOwner = htmlentities($_POST['newOwner']);
+$eventID = (int) $json_obj['eventID'];
+$newOwner = htmlentities($json_obj['newOwner']);
 
 // Fetch event details
 $stmt = $mysqli->prepare("SELECT title, eventDateTime FROM events WHERE id = ?");

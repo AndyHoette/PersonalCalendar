@@ -15,7 +15,7 @@ if (empty($json_obj["user_id"])) {
 }
 
 // Validate CSRF token
-if (!isset($_POST['token']) || !hash_equals($_POST['token'], $_SESSION['token'])) {
+if (!isset($json_obj['token']) || !hash_equals($json_obj['token'], $json_obj['token'])) {
     echo json_encode(array(
         "success" => false,
         "message" => "Invalid CSRF token."
@@ -24,7 +24,7 @@ if (!isset($_POST['token']) || !hash_equals($_POST['token'], $_SESSION['token'])
 }
 
 // Validate and sanitize inputs
-if (!isset($_POST['monthIndex'], $_POST['yearIndex'])) {
+if (!isset($json_obj['monthIndex'], $json_obj['yearIndex'])) {
     echo json_encode(array(
         "success" => false,
         "message" => "Invalid input."
@@ -32,8 +32,8 @@ if (!isset($_POST['monthIndex'], $_POST['yearIndex'])) {
     exit;
 }
 
-$monthIndex = (int) $_POST['monthIndex'];
-$yearIndex = (int) $_POST['yearIndex'];
+$monthIndex = $json_obj['monthIndex'];
+$yearIndex = $json_obj['yearIndex'];
 $user_id = $json_obj['user_id'];
 
 // Prepare SQL query to fetch events
