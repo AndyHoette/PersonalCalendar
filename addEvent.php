@@ -25,7 +25,7 @@ $hour = $json_obj['hour'];
 $minute = $json_obj['minute'];
 
 //not sure about recurring
-$recurring = isset($json_obj['recurring']) ? 1 : 0;
+$recurring = $json_obj['recurring'] ? 1 : 0;
 
 
 
