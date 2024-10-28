@@ -195,7 +195,7 @@ function logIn(){
     //checks for valid login
     console.log("attempting login");
     const password = document.getElementById("password").value;
-    const userIdLogIn = document.getElementById("password").value;
+    const userIdLogIn = document.getElementById("user").value;
     const data = {"userID": userIdLogIn, "password":password};
     console.log(data);
     if(debug){
