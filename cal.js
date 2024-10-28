@@ -70,8 +70,8 @@ function setUpCalendar() { //this is the main display function that sets up the 
             for(let i = 0; i<dayDivs.length; i++){ //makes all days clickable
                 dayDivs[i].addEventListener('click', function(){displayDate(this)}, false); //this is a comment
             }
-            for(let i = 0; i<listOfDates.length; i++){ //adds the dot if there was an event
-                let dayOfEvent = listOfDates[i];
+            for(let i = 0; i<listOfDates.events.length; i++){ //adds the dot if there was an event
+                let dayOfEvent = listOfDates.events[i];
                 let clonedDot = dot.cloneNode(true);
                 clonedDot.style.display = "block";
                 dayDivs[dayOfEvent-1+firstDayOfMonth].appendChild(clonedDot);
