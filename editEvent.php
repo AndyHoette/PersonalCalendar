@@ -51,5 +51,8 @@ if ($ownerID == $id) {
     $stmt->execute();
     $stmt->close();
 }
+echo json_encode(array(
+    "success" => true,
+));
 exit;
 ?>

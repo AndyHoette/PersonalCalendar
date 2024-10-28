@@ -55,4 +55,7 @@ if ($cnt == 0) {
     $stmt2->execute();
     $stmt2->close();
 }
+echo json_encode(array(
+    "success" => true,
+));
 ?>

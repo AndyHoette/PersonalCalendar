@@ -29,37 +29,36 @@ $newYear = (int) $json_obj['newYear'];
 $user_id = $json_obj['userID'];
 
 // Get all recurring events for the logged-in user
-$stmt = $mysqli->prepare("SELECT id, title, eventDateTime FROM events WHERE owner = ? AND recurring = 1");
+$stmt = $mysqli->prepare("SELECT id, title, month, day, hour, minute FROM events WHERE owner = ? AND recurring = 1");
 if (!$stmt) {
     exit;
 }
 
 $stmt->bind_param('i', $user_id);
 $stmt->execute();
-$stmt->bind_result($id, $title, $eventDateTime);
+$stmt->bind_result($id, $title, $month, $day, $hour, $minute);
 
 $events = array();
 while ($stmt->fetch()) {
     $events[] = array(
         "id" => $id,
-        "title" => $title,
-        "eventDateTime" => $eventDateTime
+        "title" => htmlentities($title),
+        "month" => $month,
+        "day" => $day,
+        "hour" => $hour,
+        "minute" => $minute
     );
 }
 $stmt->close();
 
 // Generate new events for the specified year
 foreach ($events as $event) {
-    $eventDateTime = new DateTime($event['eventDateTime']);
-    $eventDateTime->setDate($newYear, $eventDateTime->format('m'), $eventDateTime->format('d'));
-
-    $newEventDateTime = $eventDateTime->format('Y-m-d H:i:s');
-    $stmt2 = $mysqli->prepare("INSERT INTO events (owner, title, eventDateTime, recurring) VALUES (?, ?, ?, 0)");
+    $stmt2 = $mysqli->prepare("INSERT INTO events (owner, title, year, month, day, hour, minute, recurring) VALUES (?, ?, ?, ?, ? ,?, ?, 0)");
     if (!$stmt2) {
         continue;
     }
 
-    $stmt2->bind_param('iss', $user_id, $event['title'], $newEventDateTime);
+    $stmt2->bind_param('isiiiii', $user_id, $event['title'], $newYear, $event['month'], $event['day'], $event['hour'], $event['minute']);
     $stmt2->execute();
     $stmt2->close();
 }

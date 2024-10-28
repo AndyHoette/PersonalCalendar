@@ -29,30 +29,23 @@ if (!isset($json_obj['eventID'], $json_obj['userID']) || !is_numeric($json_obj['
 $eventID = $json_obj['eventID'];
 $newOwner = $json_obj['newOwner'];
 
-$title = $json_obj['title'];
-$year = $json_obj['year'];
-$month = $json_obj['month'];
-$day = $json_obj['day'];
-$hour = $json_obj['hour'];
-$minute = $json_obj['minute'];
-
 // Fetch event details
 
-$stmt = $mysqli->prepare("SELECT title, year, month, day, hour, minute, recurring FROM events WHERE id = ?");
+$stmt = $mysqli->prepare("SELECT title, year, month, day, hour, minute FROM events WHERE id = ?");
 if (!$stmt) {
     exit;
 }
 
 $stmt->bind_param('i', $id);
 $stmt->execute();
-$stmt->bind_result($id, $title, $year, $month, $day, $hour, $minute, $recurring);
+$stmt->bind_result( $title, $year, $month, $day, $hour, $minute);
 $stmt->fetch();
 $stmt->close();
 
 
 
 // Insert duplicated event for the new owner
-$stmt2 = $mysqli->prepare("INSERT INTO events (owner, title, year, month, day, hour, minute, recurring) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+$stmt2 = $mysqli->prepare("INSERT INTO events (owner, title, year, month, day, hour, minute, recurring) VALUES (?, ?, ?, ?, ?, ?, ?, false)");
 if (!$stmt2) {
     echo json_encode(array(
         "success" => false,
@@ -61,7 +54,11 @@ if (!$stmt2) {
     exit;
 }
 
-$stmt2->bind_param('isiiiiii', $newOwner, $title, $year, $month, $day, $hour, $minute, $recurring);
+$stmt2->bind_param('isiiiii', $newOwner, $title, $year, $month, $day, $hour, $minute);
 $stmt2->execute();
 $stmt2->close();
+echo json_encode(array(
+    "success" => true,
+));
+
 ?>

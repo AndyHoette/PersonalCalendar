@@ -25,7 +25,7 @@ if (!isset($json_obj['csrfToken']) || !hash_equals($json_obj['csrfToken'], $json
 
 
 $id = $json_obj['userID'];
-$title = htmlentities($title);
+$title = htmlentities($json_obj['title']);
 $month = $json_obj['month'];
 $day = $json_obj['day'];
 $minute = $json_obj['minute'];

@@ -14,7 +14,7 @@ const monthColors = ["CadetBlue", "Crimson", "DarkOliveGreen", "DarkTurquoise", 
 let eventDivs = []; //this we set later in the code to be all the eventDivs
 let currDate = new Date(); //this is our date variable that defaults to right now
 let yearsVisited = [2024]; //this is an arr of years we visited (used for recurring)
-let debug = true;
+let debug = false;
 
 function daysInMonth(month, year){ //this just returns the number of days in a month
     let newDate = new Date(year, month+1, 0);
@@ -335,22 +335,31 @@ function addEventAJAX(title, dateToAdd, recurring){
 
 function highlightEvent(){ //this shows the event in the bottom right
     eventSelected.style.display = "block";
-    eventSelected.children[0].value = this.children[0].value;
-    eventSelected.children[1].value = this.children[1].value;
-    eventSelected.children[2].value = this.children[2].value;
-    eventSelected.children[5].value = eventSelected.children[1].value;
-    eventSelected.children[8].value = eventSelected.children[2].value;
-    document.getElementById("nameOfEvent").innerHTML = this.children[2].value + ": " + this.children[1].value;
+    eventSelected.children[0].value = this.children[0].value; //the 7 hidden values
+    eventSelected.children[1].value = this.children[1].value; //title
+    eventSelected.children[2].value = this.children[2].value; //year
+    eventSelected.children[3].value = this.children[3].value; //month
+    eventSelected.children[4].value = this.children[4].value; //day
+    eventSelected.children[5].value = this.children[5].value; //hour
+    eventSelected.children[6].value = this.children[6].value; //minute
+
+    eventSelected.children[9].value = eventSelected.children[1].value; //sets first thing to
+    eventSelected.children[12].value = eventSelected.children[2].value; //y
+    eventSelected.children[14].value = eventSelected.children[3].value;
+    eventSelected.children[16].value = eventSelected.children[4].value; //d
+    eventSelected.children[18].value = eventSelected.children[5].value;
+    eventSelected.children[20].value = eventSelected.children[6].value;
+    document.getElementById("nameOfEvent").innerHTML = this.children[3].value + this.children[4].value + " at " + this.children[5].value +":" + this.children[6].value + ": " + this.children[1].value;
 }
 
 function editEvent(){
-    if(eventSelected.children[5].value == false || eventSelected.children[8].value == false){ //if either field is blank stop
+    if(eventSelected.children[9].value == false || eventSelected.children[12].value == false ||eventSelected.children[14].value == false || eventSelected.children[16].value == false || eventSelected.children[18].value == false || eventSelected.children[20].value == false){ //if any field is blank stop
         return;
     }
     if(localStorage.getItem("csrfToken")==null){
         return;
     }
-    const data = {"eventID":this.parentElement.children[0].value, "newTitle":this.parentElement.children[5].value, "newDatetime":eventSelected.children[8].value, "csrfToken" : localStorage.getItem("csrfToken")};
+    const data = {"eventID":this.parentElement.children[0].value, "newTitle":this.parentElement.children[9].value, "year":eventSelected.children[12].value, "month":eventSelected.children[14].value, "day":eventSelected.children[16].value, "hour":eventSelected.children[18].value, "minute":eventSelected.children[20].value,"csrfToken" : localStorage.getItem("csrfToken")};
     fetch("editEvent.php", {
         method: 'POST',
         body: JSON.stringify(data),
