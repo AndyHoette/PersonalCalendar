@@ -6,7 +6,7 @@ require 'database.php';
 header("Content-Type: application/json");
 
 // Check if user is logged in
-if (empty($json_obj["user_id"])) {
+if (empty($json_obj["userID"])) {
     echo json_encode(array(
         "success" => false,
         "message" => "User not logged in."
@@ -23,22 +23,16 @@ if (!isset($json_obj['csrfToken']) || !hash_equals($json_obj['csrfToken'], $json
     exit;
 }
 
-// Validate and sanitize inputs
-if (!isset($json_obj['monthIndex'], $json_obj['yearIndex'])) {
-    echo json_encode(array(
-        "success" => false,
-        "message" => "Invalid input."
-    ));
-    exit;
-}
 
-$monthIndex = $json_obj['monthIndex'];
-$yearIndex = $json_obj['yearIndex'];
-$user_id = $json_obj['user_id'];
+$id = $json_obj['userID'];
+$title = htmlentities($title);
+$month = $json_obj['month'];
+$day = $json_obj['day'];
+$minute = $json_obj['minute'];
 
-// 
+
 // Prepare SQL query to fetch events
-$stmt = $mysqli->prepare("SELECT id, title, eventDateTime FROM events WHERE owner = ? AND MONTH(eventDateTime) = ? AND YEAR(eventDateTime) = ?");
+$stmt = $mysqli->prepare("SELECT id, title, month, day, minute FROM events WHERE owner = ?");
 if (!$stmt) {
     echo json_encode(array(
         "success" => false,
@@ -47,19 +41,22 @@ if (!$stmt) {
     exit;
 }
 
-$stmt->bind_param('iii', $user_id, $monthIndex, $yearIndex);
+$stmt->bind_param('isii', $id, $title, $month, $day, $minute);
 $stmt->execute();
-$stmt->bind_result($id, $title, $eventDateTime);
+$stmt->bind_result($id, $title, $month, $day, $minute);
 
 $result = array();
 while ($stmt->fetch()) {
     $event = array(
-        "id" => htmlentities($id),
+        "id" => $id,
         "title" => htmlentities($title),
-        "eventDateTime" => htmlentities($eventDateTime)
+        "month" => $month,
+        "day" => $day,
+        "minute" => $minute
     );
     array_push($result, $event);
 }
+
 
 $stmt->close();
 echo json_encode(array(

@@ -6,7 +6,7 @@ require 'database.php';
 header("Content-Type: application/json");
 
 // Check if user is logged in
-if (empty($json_obj["user_id"])) {
+if (empty($json_obj["userID"])) {
     echo json_encode(array(
         "success" => false,
         "message" => "User not logged in."
@@ -23,7 +23,9 @@ if (!isset($json_obj['csrfToken'], $json_obj['title'], $json_obj['eventDateTime'
     exit;
 }
 
-// Sanitize inputs
+
+
+
 $token = $json_obj['csrfToken'];
 $title = (string) trim($json_obj['title']);
 $eventDateTime = (string) trim($json_obj['eventDateTime']);

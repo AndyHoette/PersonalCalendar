@@ -38,9 +38,7 @@ $stmt->bind_result($pwd_hash);
 $stmt->fetch();
 
 // Verify password and login if successful
-if (password_verify($passwordGuess, $pwd_hash)) {
-    // Regenerate session ID to prevent session fixation
-
+if (password_verify($passwordGuess, hash: $pwd_hash)) {
     // Login succeeded; set session variables
     $_SESSION['user_id'] = $user_id;
 

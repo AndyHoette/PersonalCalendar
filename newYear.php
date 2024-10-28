@@ -3,7 +3,7 @@ session_start();
 require 'database.php';
 
 // Check if user is logged in
-if (empty($json_obj["user_id"])) {
+if (empty($json_obj["userID"])) {
     echo json_encode(array(
         "success" => false,
         "message" => "User not logged in."
@@ -26,7 +26,7 @@ if (!isset($json_obj['newYear']) || !is_numeric($json_obj['newYear'])) {
 }
 
 $newYear = (int) $json_obj['newYear'];
-$user_id = $json_obj['user_id'];
+$user_id = $json_obj['userID'];
 
 // Get all recurring events for the logged-in user
 $stmt = $mysqli->prepare("SELECT id, title, eventDateTime FROM events WHERE owner = ? AND recurring = 1");

@@ -23,7 +23,7 @@
     }
 
     // Validate that required fields are set and sanitize inputs
-    if (!isset($json_obj['user_id'], $json_obj['password']) || empty(trim($json_obj['user_id'])) || empty(trim($json_obj['password']))) {
+    if (!isset($json_obj['userID'], $json_obj['password']) || empty(trim($json_obj['userID'])) || empty(trim($json_obj['password']))) {
         echo json_encode(array(
             "success" => false,
             "message" => "Invalid input."

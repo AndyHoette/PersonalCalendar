@@ -6,7 +6,7 @@ require 'database.php';
 header("Content-Type: application/json");
 
 // Check if user is logged in
-if (empty($json_obj["user_id"])) {
+if (empty($json_obj["userID"])) {
     echo json_encode(array(
         "success" => false,
         "message" => "User not logged in."
@@ -24,13 +24,14 @@ if (!isset($json_obj['csrfToken']) || !hash_equals($json_obj['csrfToken'], $json
 }
 
 
-$monthIndex = $json_obj['monthIndex'];
-$dayIndex = $json_obj['dayIndex'];
-$yearIndex = $json_obj['yearIndex'];
-$user_id = $json_obj['user_id'];
+$id = $json_obj['userID'];
+$title = htmlentities($title);
+$day = $json_obj['day'];
+$minute = $json_obj['minute'];
+
 
 // Prepare SQL query to fetch events
-$stmt = $mysqli->prepare("SELECT id, title, eventDateTime FROM events WHERE owner = ? AND MONTH(eventDateTime) = ? AND DAY(eventDateTime) = ? AND YEAR(eventDateTime) = ?");
+$stmt = $mysqli->prepare("SELECT id, title, day, minute FROM events WHERE owner = ?");
 if (!$stmt) {
     echo json_encode(array(
         "success" => false,
@@ -39,16 +40,17 @@ if (!$stmt) {
     exit;
 }
 
-$stmt->bind_param('iiii', $user_id, $monthIndex, $dayIndex, $yearIndex);
+$stmt->bind_param('isii', $id, $title, $day, $minute);
 $stmt->execute();
-$stmt->bind_result($id, $title, $eventDateTime);
+$stmt->bind_result($id, $title, $day, $minute);
 
 $result = array();
 while ($stmt->fetch()) {
     $event = array(
-        "id" => htmlentities($id),
+        "id" => $id,
         "title" => htmlentities($title),
-        "eventDateTime" => htmlentities($eventDateTime)
+        "day" => $day,
+        "minute" => $minute
     );
     array_push($result, $event);
 }
