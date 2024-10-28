@@ -1,5 +1,4 @@
 <?php
-session_start();
 require 'database.php';
 
 // Set content type to JSON

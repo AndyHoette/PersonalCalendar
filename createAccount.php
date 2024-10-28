@@ -13,7 +13,7 @@ $json_obj = json_decode($json_str, true);
     if (!isset($json_obj['password']) || empty(trim($json_obj['password']))) {
         echo json_encode(array(
             "success" => false,
-            "message" => "Invalid input."
+            "message" => "Invalid input 2."
         ));
         exit;
     }
