@@ -57,7 +57,7 @@ if (password_verify($passwordGuess, $pwd_hash)) {
 
     echo json_encode(array(
         "success" => true,
-        "user_id" => $user_id,
+        "user_id" => $_SESSION['user_id'],
         "token" => $_SESSION['token']
     ));
     exit;
