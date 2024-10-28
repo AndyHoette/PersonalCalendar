@@ -5,11 +5,6 @@ require 'database.php';
 header("Content-Type: application/json");
 $json_str = file_get_contents('php://input');
 $json_obj = json_decode($json_str, true);
-// Check if user is logged in
-
-// Validate CSRF token
-
-// Validate and sanitize inputs
 
 $user_id = $json_obj['userID'];
 $password = htmlentities($json_obj['password']);
