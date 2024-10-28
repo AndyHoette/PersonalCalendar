@@ -7,7 +7,10 @@ require 'database.php';
 
 // Set content type to JSON
 header("Content-Type: application/json");
-
+echo json_encode(array(
+    "success" => false,
+    "message" => "instant flag"
+));
 
 $json_str = file_get_contents('php://input');
 $json_obj = json_decode($json_str, true);
