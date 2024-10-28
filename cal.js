@@ -1,3 +1,5 @@
+// noinspection EqualityComparisonWithCoercionJS
+
 const dayDivs = document.getElementsByClassName("day");
 const monthLabel = document.getElementById("monthLabel");
 const logInButton = document.getElementById("logInButton");
@@ -43,13 +45,25 @@ function setUpCalendar() {
     * Needs to get CSRF Token
     * Needs to call the current php file
     * */
-    listOfEventsThisMonth = [{day:1},{day:5}]
-    for(let i = 0; i<listOfEventsThisMonth.length; i++){
-        let dayOfEvent = listOfEventsThisMonth[i].day;
-        let clonedDot = dot.cloneNode(true);
-        clonedDot.style.display = "block";
-        dayDivs[dayOfEvent-1+firstDayOfMonth].appendChild(clonedDot);
+    if(localStorage.getItem("csrfToken")==null){
+        return;
     }
+    const data = { 'monthIndex': currDate.getMonth(), 'yearIndex': currDate.getFullYear(), "csrfToken":localStorage.getItem("csrfToken") };
+    fetch("getEventsForMonth.php", {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then(response => response.json())
+        .then(listOfDates => {
+            for(let i = 0; i<listOfDates.length; i++){
+                let dayOfEvent = listOfDates[i];
+                let clonedDot = dot.cloneNode(true);
+                clonedDot.style.display = "block";
+                dayDivs[dayOfEvent-1+firstDayOfMonth].appendChild(clonedDot);
+            }
+        })
+        .catch(err => console.error(err));
 }
 
 function changeCalendarColor(monthIdx){
@@ -86,7 +100,10 @@ function checkNewYear(year){
     }
     yearsVisited.push(year);
     localStorage.setItem("yearsVisited", JSON.stringify(yearsVisited));
-    let data = {"newYear": year};
+    if(localStorage.getItem("csrfToken")==null){
+        return;
+    }
+    const data = {"newYear": year, "csrfToken":localStorage.getItem("csrfToken") };
     fetch("newYear.php", {
         method: 'POST',
         body: JSON.stringify(data),
@@ -103,40 +120,47 @@ function displayDate(dateDivInst){
     let day =  {year:currDate.getFullYear(), month:currDate.getMonth()+1, day:dateDivInst.firstElementChild.innerHTML};
     document.getElementById("dayListing").style.display = "block";
     dayOfEventsH1.innerHTML = mString(currDate) + ", " + day.day + " " + day.year;
-    //get all the events and add a <li> and a <div> and <input> and <p>
-    /*
-    * Needs to get CSRF Token
-    * Needs to call the current php file
-    * */
-    let events = [{id: 330, title:"This is obj title", when:new Date()}]
     listOfEvents.innerHTML = "";
-    for(let i = 0; i<events.length; i++){
-        let listItem = document.createElement("li");
-        let itemDiv = document.createElement("div");
-        itemDiv.className = "eventListed";
-        listItem.appendChild(itemDiv);
-        let hidden1 = document.createElement("input");
-        hidden1.type = "hidden";
-        hidden1.value = events[i].id;
-        itemDiv.appendChild(hidden1);
-        let hidden2 = document.createElement("input");
-        hidden2.type = "hidden";
-        hidden2.value = events[i].title;
-        itemDiv.appendChild(hidden2);
-        let hidden3 = document.createElement("input");
-        hidden3.type = "hidden";
-        hidden3.value = events[i].when;
-        itemDiv.appendChild(hidden3);
-        let itemP = document.createElement("p");
-        itemP.innerHTML = hidden2.value;
-        itemDiv.appendChild(itemP);
-        listOfEvents.append(listItem);
-        //console.log(listItem);
+    const data= {yearIndex:currDate.getFullYear(), monthIndex:currDate.getMonth()+1, dayIndex:dateDivInst.firstElementChild.innerHTML};
+    if(localStorage.getItem("csrfToken")==null){
+        return;
     }
-    eventDivs = document.getElementsByClassName('eventListed')
-    for(let i = 0; i<eventDivs.length; i++){
-        eventDivs[i].addEventListener('click', highlightEvent, false);
-    }
+    fetch("getEventsForDay.php", {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then(response => response.json())
+        .then(events => {
+            for(let i = 0; i<events.length; i++){
+                let listItem = document.createElement("li");
+                let itemDiv = document.createElement("div");
+                itemDiv.className = "eventListed";
+                listItem.appendChild(itemDiv);
+                let hidden1 = document.createElement("input");
+                hidden1.type = "hidden";
+                hidden1.value = events[i].id;
+                itemDiv.appendChild(hidden1);
+                let hidden2 = document.createElement("input");
+                hidden2.type = "hidden";
+                hidden2.value = events[i].title;
+                itemDiv.appendChild(hidden2);
+                let hidden3 = document.createElement("input");
+                hidden3.type = "hidden";
+                hidden3.value = events[i].when;
+                itemDiv.appendChild(hidden3);
+                let itemP = document.createElement("p");
+                itemP.innerHTML = hidden2.value;
+                itemDiv.appendChild(itemP);
+                listOfEvents.append(listItem);
+                //console.log(listItem);
+            }
+            eventDivs = document.getElementsByClassName('eventListed')
+            for(let i = 0; i<eventDivs.length; i++){
+                eventDivs[i].addEventListener('click', highlightEvent, false);
+            }
+        })
+        .catch(err => console.error(err));
 }
 
 function logIn(){
@@ -145,7 +169,7 @@ function logIn(){
     const password = document.getElementById("password").value;
     const userIdLogIn = document.getElementById("password").value;
     const data = {"userID": userIdLogIn, "password":password};
-    console.log(data);
+    //console.log(data);
     /*
     * Needs to get CSRF Token
     * Needs to call the current php file
@@ -198,8 +222,9 @@ function addEvent(){
     if(document.getElementById("recurringCheckBox").checked){
         addEventRecurring(newTitle, dateToAdd);
     }
-    console.log(dateToAdd);
-
+    else{
+        addEventAJAX(newTitle, dateToAdd, false);
+    }
 }
 
 function addEventRecurring(title, dateToAdd){
@@ -207,12 +232,26 @@ function addEventRecurring(title, dateToAdd){
     let years = [2024, 2025, 2023];
     for(let i = 0; i<years.length; i++){
         let newDateToAdd = new Date(years[i], dateToAdd.getMonth(), dateToAdd.getDate(), dateToAdd.getHours(), dateToAdd.getMinutes());
-        addEventAJAX(title, newDateToAdd);
+        if(i===0){
+            addEventAJAX(title, newDateToAdd, true);
+        }
+        else{
+            addEventAJAX(title, newDateToAdd, false);
+        }
     }
 }
 
-function addEventAJAX(title, dateToAdd){
-    //create the ajax request
+function addEventAJAX(title, dateToAdd, recurring){
+    if(localStorage.getItem("csrfToken")==null){
+        return;
+    }
+    const data = {"title":title, "newDatetime":dateToAdd, "csrfToken":localStorage.getItem("csrfToken"), "recurring": recurring };
+    fetch("addEvent.php", {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    }).then(response => setUpCalendar())
+        .catch(err => console.log(err))
 }
 
 function highlightEvent(){
@@ -232,7 +271,10 @@ function editEvent(){
     console.log(eventSelected.children[0].value);
     console.log(eventSelected.children[5].value);
     console.log(eventSelected.children[8].value);
-    let data = {"eventID":this.parentElement.children[0].value, "newTitle":this.parentElement.children[5].value, "newDatetime":eventSelected.children[8].value};
+    if(localStorage.getItem("csrfToken")==null){
+        return;
+    }
+    const data = {"eventID":this.parentElement.children[0].value, "newTitle":this.parentElement.children[5].value, "newDatetime":eventSelected.children[8].value, "csrfToken" : localStorage.getItem("csrfToken")};
     fetch("editEvent.php", {
         method: 'POST',
         body: JSON.stringify(data),
@@ -243,7 +285,10 @@ function editEvent(){
 function shareEvent(){
     console.log(this.parentElement.children[0].value); //event ID
     console.log(this.parentElement.children[11].value); //new user
-    let data = {"eventID":this.parentElement.children[0].value, "newOwner":this.parentElement.children[11].value}
+    if(localStorage.getItem("csrfToken")==null){
+        return;
+    }
+        const data = {"eventID":this.parentElement.children[0].value, "newOwner":this.parentElement.children[11].value, "csrfToken" : localStorage.getItem("csrfToken")};
     fetch("shareEvent.php", {
         method: 'POST',
         body: JSON.stringify(data),
@@ -253,7 +298,10 @@ function shareEvent(){
 
 function deleteEvent(){
     console.log(this.parentElement.children[0].value); //event ID
-    let data = {"eventID":this.parentElement.children[0].value}
+    if(localStorage.getItem("csrfToken")==null) {
+        return;
+    }
+    const data = {"eventID":this.parentElement.children[0].value, "csrfToken" : localStorage.getItem("csrfToken")};
     fetch("deleteEvent.php", {
         method: 'POST',
         body: JSON.stringify(data),
@@ -265,6 +313,7 @@ document.getElementById("AddEventForm").style.display = "none";
 document.getElementById("userGreeting").style.display = "none";
 document.getElementById("eventSelected").style.display = "none";
 document.getElementById("dayListing").style.display = "none";
+document.getElementById("logOut").style.display = "none";
 dot.style.display = "none";
 
 document.addEventListener("DOMContentLoaded", setUpCalendar, false);
