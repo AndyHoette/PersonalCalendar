@@ -1,5 +1,6 @@
 <?php
 require 'database.php';
+session_start();
 
 // Set content type to JSON
 header("Content-Type: application/json");
