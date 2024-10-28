@@ -17,6 +17,7 @@ echo json_encode(array(
     "message" => "fields not set",
     "json_str_passed" => $json_str
 ));
+exit;
 
 
 if(!isset($json_obj['userID']) || !isset($json_obj['password'])){
