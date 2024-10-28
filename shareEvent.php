@@ -21,36 +21,47 @@ if (!isset($json_obj['csrfToken']) || !hash_equals($json_obj['csrfToken'], $json
 }
 
 // Validate and sanitize inputs
-if (!isset($json_obj['eventID'], $json_obj['newOwner']) || !is_numeric($json_obj['eventID']) || empty(trim($json_obj['newOwner']))) {
+if (!isset($json_obj['eventID'], $json_obj['userID']) || !is_numeric($json_obj['eventID']) || empty(trim($json_obj['userID']))) {
     exit;
 }
 
-$eventID = (int) $json_obj['eventID'];
-$newOwner = htmlentities($json_obj['newOwner']);
+// newOwner needed??
+$eventID = $json_obj['eventID'];
+$newOwner = $json_obj['newOwner'];
+
+$title = $json_obj['title'];
+$year = $json_obj['year'];
+$month = $json_obj['month'];
+$day = $json_obj['day'];
+$hour = $json_obj['hour'];
+$minute = $json_obj['minute'];
 
 // Fetch event details
-$stmt = $mysqli->prepare("SELECT title, eventDateTime FROM events WHERE id = ?");
+
+$stmt = $mysqli->prepare("SELECT title, year, month, day, hour, minute, recurring FROM events WHERE id = ?");
 if (!$stmt) {
     exit;
 }
 
-$stmt->bind_param('i', $eventID);
+$stmt->bind_param('i', $id);
 $stmt->execute();
-$stmt->bind_result($title, $eventDateTime);
+$stmt->bind_result($id, $title, $year, $month, $day, $hour, $minute, $recurring);
 $stmt->fetch();
 $stmt->close();
 
-if (empty($title) || empty($eventDateTime)) {
-    exit;
-}
+
 
 // Insert duplicated event for the new owner
-$stmt2 = $mysqli->prepare("INSERT INTO events (owner, title, eventDateTime) VALUES (?, ?, ?)");
+$stmt2 = $mysqli->prepare("INSERT INTO events (owner, title, year, month, day, hour, minute, recurring) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 if (!$stmt2) {
+    echo json_encode(array(
+        "success" => false,
+        "message" => "Incorrect Username"
+    ));
     exit;
 }
 
-$stmt2->bind_param('sss', $newOwner, $title, $eventDateTime);
+$stmt2->bind_param('isiiiiii', $newOwner, $title, $year, $month, $day, $hour, $minute, $recurring);
 $stmt2->execute();
 $stmt2->close();
 ?>

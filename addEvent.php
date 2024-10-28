@@ -15,7 +15,7 @@ if (empty($json_obj["userID"])) {
 }
 
 
-if (!isset($json_obj['csrfToken'], $json_obj['title'], $json_obj['eventDateTime']) || empty(trim($json_obj['csrfToken'])) || empty(trim($json_obj['title'])) || empty(trim($json_obj['eventDateTime']))) {
+if (!isset($json_obj['csrfToken']) || empty(trim($json_obj['csrfToken'])) || empty(trim($json_obj['title'])) || empty(trim($json_obj['year'])) || empty(trim($json_obj['month'])) || empty(trim($json_obj['day'])) || empty(trim($json_obj['hour'])) || empty(trim($json_obj['minute']))) {
     echo json_encode(array(
         "success" => false,
         "message" => "Invalid input."
@@ -24,15 +24,7 @@ if (!isset($json_obj['csrfToken'], $json_obj['title'], $json_obj['eventDateTime'
 }
 
 
-
-
-$token = $json_obj['csrfToken'];
-$title = (string) trim($json_obj['title']);
-$eventDateTime = (string) trim($json_obj['eventDateTime']);
-$recurring = isset($json_obj['recurring']) ? 1 : 0;
-
-// Validate CSRF token
-if ($token !== $json_obj['csrfToken']) {
+if (!isset($json_obj['csrfToken']) || !hash_equals($json_obj['csrfToken'], $json_obj['csrfToken'])) {
     echo json_encode(array(
         "success" => false,
         "message" => "Invalid CSRF token."
@@ -40,7 +32,20 @@ if ($token !== $json_obj['csrfToken']) {
     exit;
 }
 
-$stmt = $mysqli->prepare("INSERT INTO events (owner, title, eventDateTime, recurring) VALUES (?, ?, ?, ?)");
+$owner = $json_obj['userID'];
+$title = $json_obj['title'];
+$year = $json_obj['year'];
+$month = $json_obj['month'];
+$day = $json_obj['day'];
+$hour = $json_obj['hour'];
+$minute = $json_obj['minute'];
+
+//not sure about recurring
+$recurring = isset($json_obj['recurring']) ? 1 : 0;
+
+
+
+$stmt = $mysqli->prepare("INSERT INTO events (userID, title, year, month, day, hour, minute, recurring) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 if (!$stmt) {
     echo json_encode(array(
         "success" => false,
@@ -50,8 +55,7 @@ if (!$stmt) {
 }
 
 // Bind parameters and execute query
-$owner = $json_obj['user_id'];
-$stmt->bind_param('sss', $owner, $title, $eventDateTime);
+$stmt->bind_param('isiiiiii', $owner, $title, $year, $month, $day, $hour, $minute, $recurring);
 $stmt->execute();
 
 if ($stmt->affected_rows > 0) {
