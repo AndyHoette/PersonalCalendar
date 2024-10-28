@@ -37,12 +37,9 @@ if (password_verify($passwordGuess, $pwd_hash)) {
     // Generate CSRF token
     $_SESSION['token'] = bin2hex(random_bytes(32));
 
-    echo json_encode(array(
-        "success" => true,
-        "user_id" => $user_id,
-        "token" => $_SESSION['token']
-    ));
-    exit;
+    header('Location: unauthorized.php');
+
+
 }
 echo json_encode(array(
     "success" => false,
