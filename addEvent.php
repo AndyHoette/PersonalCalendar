@@ -4,9 +4,10 @@ require 'database.php';
 
 // Set content type to JSON
 header("Content-Type: application/json");
-
+$json_str = file_get_contents('php://input');
+$json_obj = json_decode($json_str, true);
 // Check if user is logged in
-if (empty($json_obj["userID"])) {
+if (empty($_SESSION['user'])) {
     echo json_encode(array(
         "success" => false,
         "message" => "User not logged in."
@@ -32,7 +33,7 @@ if (!isset($json_obj['csrfToken']) || !hash_equals($json_obj['csrfToken'], $json
     exit;
 }
 
-$owner = $json_obj['userID'];
+$owner = $_SESSION['user_id'];
 $title = $json_obj['title'];
 $year = $json_obj['year'];
 $month = $json_obj['month'];

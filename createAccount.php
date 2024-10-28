@@ -6,6 +6,8 @@
     header("Content-Type: application/json");
 
     // Validate CSRF token
+$json_str = file_get_contents('php://input');
+$json_obj = json_decode($json_str, true);
 
     // Validate that required fields are set and sanitize inputs
     if (!isset($json_obj['password']) || empty(trim($json_obj['password']))) {

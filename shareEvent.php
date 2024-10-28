@@ -1,7 +1,8 @@
 <?php
 session_start();
 require 'database.php';
-
+$json_str = file_get_contents('php://input');
+$json_obj = json_decode($json_str, true);
 // Check if user is logged in
 if (!isset($_SESSION["user_id"])) {
     echo json_encode(array(

@@ -3,29 +3,13 @@ session_start();
 require 'database.php';
 
 header("Content-Type: application/json");
-
+$json_str = file_get_contents('php://input');
+$json_obj = json_decode($json_str, true);
 // Check if user is logged in
-if (empty($json_obj["userID"])) {
-    echo json_encode(array(
-        "success" => false,
-        "message" => "User not logged in."
-    ));
-    exit;
-}
 
 // Validate CSRF token
-if (!isset($json_obj['csrfToken']) || !hash_equals($json_obj['csrfToken'], $json_obj['csrfToken'])) {
-    echo json_encode(array(
-        "success" => false,
-        "message" => "Invalid CSRF token."
-    ));
-    exit;
-}
 
 // Validate and sanitize inputs
-if (!isset($json_obj['userID'], $json_obj['password']) || !is_numeric($json_obj['userID']) || empty(trim($json_obj['password']))) {
-    exit; // Invalid input, terminate script
-}
 
 $user_id = $json_obj['userID'];
 $password = htmlentities($json_obj['password']);

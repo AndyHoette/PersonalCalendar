@@ -1,7 +1,8 @@
 <?php
 session_start();
 require 'database.php'; // Ensure this connects to your database
-
+$json_str = file_get_contents('php://input');
+$json_obj = json_decode($json_str, true);
 // Set content type to JSON
 header("Content-Type: application/json");
 
