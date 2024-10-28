@@ -209,7 +209,7 @@ function logIn(){
         fetch("login_ajax.php", {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({userID: userIdLogIn, password: password})
+            body: JSON.stringify(data)
         })
             .then(response => response.json())
             .then(answer => { //returns a csrfToken, userID, and success bool
@@ -269,7 +269,7 @@ function createAccount(b){ //creates a user
                 document.getElementById("logOut").style.display = "block";
                 localStorage.setItem("csrfToken", answer.csrfToken); //set the local vars correctly
                 localStorage.setItem("userID", answer.user_id);
-                document.getElementById("userGreeting").innerHTML = "Hello User #" + answer.userID;
+                document.getElementById("userGreeting").innerHTML = "Hello User #" + answer.user_id;
             }
         }).catch(err => console.log(err));
 }
