@@ -27,6 +27,7 @@ if (!isset($_POST['token'], $_POST['title'], $_POST['eventDateTime']) || empty(t
 $token = (string) $_POST['token'];
 $title = (string) trim($_POST['title']);
 $eventDateTime = (string) trim($_POST['eventDateTime']);
+$recurring = isset($Post['recurring']) ? 1 : 0;
 
 // Validate CSRF token
 if ($token !== $_SESSION['token']) {
@@ -37,7 +38,7 @@ if ($token !== $_SESSION['token']) {
     exit;
 }
 
-$stmt = $mysqli->prepare("INSERT INTO events (owner, title, eventDateTime) VALUES (?, ?, ?)");
+$stmt = $mysqli->prepare("INSERT INTO events (owner, title, eventDateTime, recurring) VALUES (?, ?, ?, ?)");
 if (!$stmt) {
     echo json_encode(array(
         "success" => false,

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'database.php'; // Ensure this connects to your database
+require 'database.php';
 
 // Set content type to JSON
 header("Content-Type: application/json");
@@ -24,8 +24,8 @@ if (!isset($_POST['token']) || !hash_equals($_POST['token'], $_SESSION['token'])
 }
 
 // Sanitize inputs
-$eventId = (int) $_POST['eventId']; // Assuming eventId is an integer
-$owner = $_SESSION['user_id']; // Get the logged-in user's ID
+$eventId = (int) $_POST['eventId'];
+$owner = $_SESSION['user_id'];
 
 // Check if the event belongs to the user
 $stmt = $mysqli->prepare("SELECT owner FROM events WHERE id = ?");
