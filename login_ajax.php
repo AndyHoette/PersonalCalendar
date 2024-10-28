@@ -43,7 +43,7 @@ if (password_verify($passwordGuess, $pwd_hash)) {
     $_SESSION['user_id'] = $user_id;
 
     // Generate CSRF token
-    $_SESSION['csrfToken'] = bin2hex(random_bytes(32));
+    $_SESSION['token'] = bin2hex(random_bytes(32));
 
     echo json_encode(array(
         "success" => true,
