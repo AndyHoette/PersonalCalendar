@@ -1,17 +1,12 @@
 <?php
 
-//ini_set("session.cookie_httponly", 1);
+ini_set("session.cookie_httponly", 1);
 
 session_start();
 require 'database.php';
 
 // Set content type to JSON
 header("Content-Type: application/json");
-echo json_encode(array(
-    "success" => false,
-    "message" => "instant flag"
-));
-exit;
 
 $json_str = file_get_contents('php://input');
 $json_obj = json_decode($json_str, true);
