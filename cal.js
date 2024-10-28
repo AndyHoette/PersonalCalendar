@@ -250,7 +250,7 @@ function logOut(){ //logs the user out
 }
 
 function createAccount(b){ //creates a user
-    let data = {"password":b.parentElement.children[1].value}; //gets the password
+    let data = {"password":document.getElementById("createAccountForm").children[1].value}; //gets the password
     console.log("sending to createAccount.php" + data);
     fetch("createAccount.php", {
         method: 'POST',
