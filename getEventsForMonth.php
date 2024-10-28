@@ -31,7 +31,7 @@ $year = $json_obj['yearIndex'];
 
 
 // Prepare SQL query to fetch events
-$stmt = $mysqli->prepare("SELECT day FROM events WHERE owner = ? and WHERE year = ? and WHERE month = ?");
+$stmt = $mysqli->prepare("SELECT day FROM events WHERE owner = ? and year = ? and month = ?");
 if (!$stmt) {
     echo json_encode(array(
         "success" => false,
