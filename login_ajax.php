@@ -10,8 +10,8 @@ $json_str = file_get_contents('php://input');
 $json_obj = json_decode($json_str, true);
 
 
-$user_id = $_POST['user'];
-$passwordGuess = $_POST['pass_guess'];
+$user_id = $json_obj['user'];
+$passwordGuess = $json_obj['pass_guess'];
 
 // Prepare SQL query for users table with only 'id' and 'password'
 $stmt = $mysqli->prepare("SELECT COUNT(*), id, password FROM users WHERE id = ?");
