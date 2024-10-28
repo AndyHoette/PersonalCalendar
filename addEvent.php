@@ -17,11 +17,7 @@ if (!isset($_SESSION['user_id'])) {
 
 
 
-echo json_encode(array(
-    "success" => false,
-    "message" => "Here not work"
-));
-exit;
+
 
 if (!isset($json_obj['csrfToken']) || empty(trim($json_obj['csrfToken'])) || empty(trim($json_obj['title'])) || empty(trim($json_obj['year'])) || empty(trim($json_obj['month'])) || empty(trim($json_obj['day'])) || empty(trim($json_obj['hour'])) || empty(trim($json_obj['minute']))) {
     echo json_encode(array(
@@ -32,6 +28,11 @@ if (!isset($json_obj['csrfToken']) || empty(trim($json_obj['csrfToken'])) || emp
 }
 
 
+echo json_encode(array(
+    "success" => false,
+    "message" => "Here not work"
+));
+exit;
 
 
 if (!isset($json_obj['csrfToken']) || !hash_equals($json_obj['csrfToken'], $json_obj['csrfToken'])) {
