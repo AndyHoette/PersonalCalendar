@@ -6,13 +6,6 @@
     header("Content-Type: application/json");
 
     // Validate CSRF token
-    if (!isset($json_obj['csrfToken']) || !hash_equals($json_obj['csrfToken'], $json_obj['csrfToken'])) {
-        echo json_encode(array(
-            "success" => false,
-            "message" => "Invalid CSRF token."
-        ));
-        exit;
-    }
 
     // Validate that required fields are set and sanitize inputs
     if (!isset($json_obj['userID'], $json_obj['password']) || empty(trim($json_obj['userID'])) || empty(trim($json_obj['password']))) {
