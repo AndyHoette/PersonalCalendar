@@ -208,7 +208,7 @@ function logIn(){
         console.log(JSON.stringify(data));
         fetch("login_ajax.php", {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'content-type': 'application/json' },
             body: JSON.stringify(data)
         })
             .then(response => response.json())
