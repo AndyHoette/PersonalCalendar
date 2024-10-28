@@ -193,6 +193,7 @@ function displayDate(dateDivInst){
 
 function logIn(){
     //checks for valid login
+    console.log("attempting login");
     const password = document.getElementById("password").value;
     const userIdLogIn = document.getElementById("password").value;
     const data = {"userID": userIdLogIn, "password":password};
@@ -266,7 +267,7 @@ function createAccount(b){ //creates a user
                 document.getElementById("AddEventForm").style.display = "block";
                 document.getElementById("logOut").style.display = "block";
                 localStorage.setItem("csrfToken", answer.csrfToken); //set the local vars correctly
-                localStorage.setItem("userID", answer.userID);
+                localStorage.setItem("userID", answer.user_id);
                 document.getElementById("userGreeting").innerHTML = "Hello User #" + answer.userID;
             }
         }).catch(err => console.log(err));
