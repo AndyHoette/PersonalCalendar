@@ -3,7 +3,7 @@
 //ini_set("session.cookie_httponly", 1);
 
 session_start();
-require 'database.php';
+//require 'database.php';
 
 // Set content type to JSON
 header("Content-Type: application/json");
