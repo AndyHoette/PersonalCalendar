@@ -27,7 +27,7 @@ echo json_encode(array(
     "success" => false,
     "message" => "fields not set",
     "userPassed" => $user_id,
-    "passwordPassed" => $json_obj
+    "passwordPassed" => $json_str
 ));
 exit;
 //$_SESSION['csrfToken'] = bin2hex(random_bytes(32));
