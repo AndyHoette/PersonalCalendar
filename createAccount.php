@@ -42,6 +42,7 @@ $json_obj = json_decode($json_str, true);
 
         // Login the user after successful creation
         $_SESSION['user_id'] = $mysqli->insert_id;
+
         $_SESSION['token'] = bin2hex(random_bytes(32));
 
         echo json_encode(array(
