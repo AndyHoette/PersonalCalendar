@@ -205,6 +205,7 @@ function logIn(){
         document.getElementById("AddEventForm").style.display = "block";
     }
     else {
+        console.log(JSON.stringify(data));
         fetch("login_ajax.php", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
