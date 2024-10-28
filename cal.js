@@ -222,8 +222,8 @@ function logIn(){
                     document.getElementById("userGreeting").style.display = "block"; //show the next level
                     document.getElementById("AddEventForm").style.display = "block";
                     localStorage.setItem("csrfToken", answer.csrfToken); //set the local vars correctly
-                    localStorage.setItem("userID", answer.userID);
-                    document.getElementById("userGreeting").innerHTML = "Hello User #" + answer.userID;
+                    localStorage.setItem("userID", answer.user_id);
+                    document.getElementById("userGreeting").innerHTML = "Hello User #" + answer.user_id;
                 } else {
                     console.log(`You were not logged in: ${data.message}`);
                 }
