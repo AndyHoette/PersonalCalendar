@@ -51,18 +51,7 @@ if (!isset($json_obj['csrfToken']) || !hash_equals($json_obj['csrfToken'], $json
 
 
 
-echo json_encode(array(
-    "success" => false,
-    "id" => $owner,
-    "title" => $title,
-    "year" => $year,
-    "month" => $month,
-    "day" => $day,
-    "hour" => $hour,
-    "minute" => $minute,
-    "recurringBoolean" => $recurring
-));
-exit;
+
 
 $stmt = $mysqli->prepare("INSERT INTO events (id, title, year, month, day, hour, minute, recurringBoolean) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 if (!$stmt) {
