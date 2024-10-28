@@ -26,14 +26,12 @@ if (!isset($json_obj['csrfToken']) || !hash_equals($json_obj['csrfToken'], $json
 
 
 $id = $_SESSION["user_id"];
-$title = htmlentities($json_obj['title']);
-$month = $json_obj['month'];
-$day = $json_obj['day'];
-$minute = $json_obj['minute'];
+$month = $json_obj['monthIndex'];
+$year = $json_obj['yearIndex'];
 
 
 // Prepare SQL query to fetch events
-$stmt = $mysqli->prepare("SELECT id, title, month, day, minute FROM events WHERE owner = ?");
+$stmt = $mysqli->prepare("SELECT day FROM events WHERE owner = ? and year = ? and month = ?");
 if (!$stmt) {
     echo json_encode(array(
         "success" => false,
@@ -42,20 +40,15 @@ if (!$stmt) {
     exit;
 }
 
-$stmt->bind_param('isii', $id, $title, $month, $day, $minute);
+$stmt->bind_param('iii', $id, $year, $month);
 $stmt->execute();
-$stmt->bind_result($id, $title, $month, $day, $minute);
+$stmt->bind_result($day);
 
 $result = array();
 while ($stmt->fetch()) {
-    $event = array(
-        "id" => $id,
-        "title" => htmlentities($title),
-        "month" => $month,
-        "day" => $day,
-        "minute" => $minute
-    );
-    array_push($result, $event);
+    if(!in_array($day, $result)) {
+        array_push($result, $day);
+    }
 }
 
 
