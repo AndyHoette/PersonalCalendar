@@ -214,6 +214,7 @@ function logIn(){
             .then(response => response.json())
             .then(answer => { //returns a csrfToken, userID, and success bool
                 if (data.success) {
+                    console.log("log in good");
                     document.getElementById("LogInForm").style.display = "none";
                     document.getElementById("createAccountForm").style.display = "none";
                     document.getElementById("userGreeting").style.display = "block"; //show the next level
