@@ -23,14 +23,6 @@ if (!isset($_POST['token']) || !hash_equals($_POST['token'], $_SESSION['token'])
     exit;
 }
 
-// Validate and sanitize inputs
-if (!isset($_POST['monthIndex'], $_POST['dayIndex'], $_POST['yearIndex'])) {
-    echo json_encode(array(
-        "success" => false,
-        "message" => "Invalid input."
-    ));
-    exit;
-}
 
 $monthIndex = (int) $_POST['monthIndex'];
 $dayIndex = (int) $_POST['dayIndex'];
