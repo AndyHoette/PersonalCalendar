@@ -28,6 +28,7 @@ function setUp(){
         document.getElementById("createAccountForm").style.display = "none";
         document.getElementById("userGreeting").style.display = "block"; //show the next level
         document.getElementById("AddEventForm").style.display = "block";
+        document.getElementById("logOut").style.display = "block";
         document.getElementById("userGreeting").innerHTML = "Hello User #" + localStorage.getItem("userID");
     }
 }
