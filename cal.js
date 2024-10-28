@@ -248,6 +248,9 @@ function logOut(){ //logs the user out
         document.getElementById("logOut").style.display = "none";
         document.getElementById("createAccountForm").style.display = "block";
         document.getElementById("LogInForm").style.display = "block";
+        document.getElementById("user").value = "";
+        document.getElementById("password").value = "";
+        document.getElementById("createPassword").value = ""
         localStorage.clear(); //clears the local storage
         setUpCalendar();
         })
@@ -270,7 +273,7 @@ function createAccount(b){ //creates a user
                 document.getElementById("userGreeting").style.display = "block"; //show the next level
                 document.getElementById("AddEventForm").style.display = "block";
                 document.getElementById("logOut").style.display = "block";
-                localStorage.setItem("csrfToken", answer.csrfToken); //set the local vars correctly
+                localStorage.setItem("csrfToken", answer.token); //set the local vars correctly
                 localStorage.setItem("userID", answer.user_id);
                 document.getElementById("userGreeting").innerHTML = "Hello User #" + answer.user_id;
             }
