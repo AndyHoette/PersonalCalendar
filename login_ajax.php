@@ -32,7 +32,7 @@ if ($cnt == 1 && password_verify($passwordGuess, $pwd_hash)) {
     session_regenerate_id(true);
 
     // Login succeeded; set session variables
-    $_SESSION['user_id'] = $user_id;
+    $_SESSION['user_id'] = $db_user_id;
 
     // Generate CSRF token
     $_SESSION['token'] = bin2hex(random_bytes(32));
@@ -43,13 +43,12 @@ if ($cnt == 1 && password_verify($passwordGuess, $pwd_hash)) {
         "token" => $_SESSION['token']
     ));
     exit;
-} else {
-    // Login failed
-    echo json_encode(array(
-        "success" => false,
-        "message" => "Invalid user ID or password."
-    ));
-    exit;
 }
+echo json_encode(array(
+    "success" => false,
+    "message" => "Invalid user ID or password."
+));
+exit;
+
 
 ?>
