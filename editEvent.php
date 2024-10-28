@@ -6,7 +6,7 @@ require 'database.php'; // Ensure this connects to your database
 header("Content-Type: application/json");
 
 // Check if user is logged in
-if (empty($json_obj["userID"])) {
+if (!isset($_SESSION['user_id'])) {
     echo json_encode(array(
         "success" => false,
         "message" => "User not logged in."
@@ -24,7 +24,7 @@ if (!isset($json_obj['csrfToken']) || !hash_equals($json_obj['csrfToken'], $json
 }
 
 // The new stuff
-$id = $json_obj['id'];
+$id = $_SESSION['user_id'];
 $title = htmlentities($json_obj['title']);
 $year = $json_obj['year'];
 $month = $json_obj['month'];

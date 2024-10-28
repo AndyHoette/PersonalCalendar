@@ -6,7 +6,7 @@ require 'database.php';
 header("Content-Type: application/json");
 
 // Check if user is logged in
-if (empty($json_obj["userID"])) {
+if (!isset($_SESSION["user_id"])) {
     echo json_encode(array(
         "success" => false,
         "message" => "User not logged in."
@@ -25,7 +25,7 @@ if (!isset($json_obj['csrfToken']) || !hash_equals($json_obj['csrfToken'], $json
 
 
 $eventId = $json_obj['eventId'];
-$owner = $json_obj['userID'];
+$owner = $_SESSION['user_id'];
 
 // Check if the event belongs to the user
 $stmt = $mysqli->prepare("SELECT owner FROM events WHERE id = ?");

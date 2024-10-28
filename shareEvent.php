@@ -36,7 +36,7 @@ if (!$stmt) {
     exit;
 }
 
-$stmt->bind_param('i', $id);
+$stmt->bind_param('i', $_SESSION['user_id']);
 $stmt->execute();
 $stmt->bind_result( $title, $year, $month, $day, $hour, $minute);
 $stmt->fetch();
