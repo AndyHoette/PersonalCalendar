@@ -10,8 +10,8 @@ $user_id = $_POST['user'];
 $passwordGuess = $_POST['pass_guess'];
 
 // Prepare SQL query for users table with only 'id' and 'password'
-//$stmt = $mysqli->prepare("SELECT COUNT(*), id, password FROM users WHERE id = ?");
-$stmt = $mysqli->prepare("SELECT password FROM users WHERE id=?");
+$stmt = $mysqli->prepare("SELECT COUNT(*), id, password FROM users WHERE id = ?");
+//$stmt = $mysqli->prepare("SELECT password FROM users WHERE id=?");
 if (!$stmt) {
     echo json_encode(array(
         "success" => false,
@@ -50,6 +50,4 @@ echo json_encode(array(
     "message" => "Invalid user ID or password."
 ));
 exit;
-
-
 ?>
