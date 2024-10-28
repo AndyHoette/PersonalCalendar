@@ -10,18 +10,12 @@ $json_str = file_get_contents('php://input');
 $json_obj = json_decode($json_str, true);
 
 
-$user_id = $json_obj['user'];
-$passwordGuess = $json_obj['pass_guess'];
+$user_id = $json_obj['userID'];
+$passwordGuess = $json_obj['password'];
 
 
 $_SESSION['token'] = bin2hex(random_bytes(32));
 
-echo json_encode(array(
-    "success" => true,
-    "user_id" => $user_id,
-    "token" => $_SESSION['token']
-));
-exit;
 
 // Prepare SQL query for users table with only 'id' and 'password'
 $stmt = $mysqli->prepare("SELECT COUNT(*), id, password FROM users WHERE id = ?");
