@@ -26,7 +26,7 @@ Needed php Scripts:
     logout.php which destroys the session<br>
     addEvent.php takes title, newDatetime and doesn't need to return anything<br>
     shareEvent.php takes eventID, newOwner and duplicates the event for the newOwner and doesn't need to return anything<br>
-    createUser.php takes a password and creates a new user and needs to return the newUser ID
+    createUser.php takes a password and creates a new user and needs to return the newUser ID and csrf token
     
     
     
